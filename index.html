@@ -355,7 +355,7 @@
             </div>
         </section>
 
-        <!-- Booking Request Form Section - EMAIL-ONLY GENERATION -->
+        <!-- Booking Request Form Section -->
         <h2 class="section-title">📅 Booking Request</h2>
         <section class="booking-container">
             <form id="bookingForm">
@@ -415,7 +415,7 @@
         form.addEventListener('submit', function(event) {
             event.preventDefault();
 
-            // Pull information from input elements
+            // Pull values from input elements
             const clientName = document.getElementById('name').value;
             const puppyName = document.getElementById('puppy-name').value;
             const checkIn = document.getElementById('check-in').value;
@@ -423,7 +423,7 @@
             const specialNotes = document.getElementById('notes').value || "None";
 
             // Craft email subject and body template
-            const subject = `🐾 Momo Dog Sitting Booking Request - ${puppyName}`;
+            const subject = `Momo Dog Sitting Booking Request - ${puppyName}`;
             const body = `Hi Gracie,\n\nI'd love to request a booking for my pup! Here are the details:\n\n` +
                          `• Client Name: ${clientName}\n` +
                          `• Puppy Name: ${puppyName}\n` +
@@ -432,18 +432,17 @@
                          `Special Notes:\n${specialNotes}\n\n` +
                          `Looking forward to hearing from you!`;
 
-            // Open up the predefined Gmail window mapping directly to your address
-            const gmailUrl = "https://mail.google.com/mail/?view=cm&fs=1" +
-                             "&to=grace.de.kim@gmail.com" +
-                             "&su=" + encodeURIComponent(subject) +
-                             "&body=" + encodeURIComponent(body);
-
-            window.open(gmailUrl, '_blank');
+            // Standard mailto link structure assigned to window.location
+            // This safely bypasses browser popup blockers and handles mobile or desktop devices natively.
+            window.location.href = "mailto:grace.de.kim@gmail.com" +
+                                   "?subject=" + encodeURIComponent(subject) +
+                                   "&body=" + encodeURIComponent(body);
         });
 
+        // Universal footer fallback
         document.getElementById('footerEmailBtn').addEventListener('click', function(e) {
             e.preventDefault();
-            window.open("https://mail.google.com/mail/?view=cm&fs=1&to=grace.de.kim@gmail.com", '_blank');
+            window.location.href = "mailto:grace.de.kim@gmail.com";
         });
 
         document.getElementById('venmoBtn').addEventListener('click', function(e) {
