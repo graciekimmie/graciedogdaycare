@@ -34,7 +34,7 @@
             padding: 10px 18px;
             border-radius: 30px;
             text-decoration: none;
-            color: #E1306C; /* Instagram signature pink/red accent */
+            color: #E1306C;
             font-weight: 700;
             font-size: 0.85rem;
             box-shadow: 0 4px 15px rgba(225, 48, 108, 0.15);
@@ -390,6 +390,7 @@
                 <button type="submit" class="submit-btn">Send Booking Request 🐾</button>
             </form>
 
+            <!-- Refactored button from Screenshot 2026-06-27 at 2.31.00 AM.png to open a direct Gmail web tab -->
             <a href="https://mail.google.com/mail/?view=cm&fs=1&to=grace.de.kim@gmail.com&su=%F0%9F%90%BE%20Direct%20Inquiry%20for%20Momo%20Dog%20Sitting" target="_blank" class="direct-email-btn">
                 Or Email Directly ✉️
             </a>
@@ -418,7 +419,7 @@
     </footer>
 
     <script>
-        // Form Email Dynamic Submission Logic optimized for Gmail Web UI
+        // FIXED: Form Submission Logic completely locked into the dynamic Gmail Tab composition
         document.getElementById('bookingForm').addEventListener('submit', function(event) {
             event.preventDefault();
 
@@ -461,11 +462,9 @@
             e.preventDefault();
             const start = Date.now();
             
-            // Try triggering the native Instagram App pop-up redirect
             window.location.href = "instagram://user?username=Gracie.kimmie";
             
             setTimeout(function() {
-                // Fallback to opening standard web profile tab if app response isn't detected
                 if (Date.now() - start < 1500) {
                     window.open("https://instagram.com/Gracie.kimmie", "_blank");
                 }
