@@ -332,7 +332,6 @@
 
     <!-- Header -->
     <header>
-        <!-- Cute App-Launching Instagram Link -->
         <a href="instagram://user?username=Gracie.kimmie" id="igBtn" target="_blank" class="ig-top-link">
             <span class="ig-icon"></span> @Gracie.kimmie
         </a>
@@ -361,7 +360,16 @@
         <!-- Booking Request Form -->
         <h2 class="section-title">📅 Booking Request</h2>
         <section class="booking-container">
-            <form id="bookingForm">
+            
+            <!-- Standard dynamic form routing built explicitly for web view targeting -->
+            <form id="bookingForm" method="GET" action="https://mail.google.com/mail/" target="_blank">
+                <!-- Hidden fields that explicitly control the web window settings inside Gmail -->
+                <input type="hidden" name="view" value="cm">
+                <input type="hidden" name="fs" value="1">
+                <input type="hidden" name="to" value="grace.de.kim@gmail.com">
+                <input type="hidden" name="su" id="hiddenSubject">
+                <input type="hidden" name="body" id="hiddenBody">
+
                 <div class="form-group">
                     <label for="name">Your Name</label>
                     <input type="text" id="name" required>
@@ -390,8 +398,8 @@
                 <button type="submit" class="submit-btn">Send Booking Request 🐾</button>
             </form>
 
-            <!-- Refactored button from Screenshot 2026-06-27 at 2.31.00 AM.png to open a direct Gmail web tab -->
-            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=grace.de.kim@gmail.com&su=%F0%9F%90%BE%20Direct%20Inquiry%20for%20Momo%20Dog%20Sitting" target="_blank" class="direct-email-btn">
+            <!-- Screenshot 2026-06-27 at 2.31.00 AM.png button explicitly routed to bypass mobile system interceptors -->
+            <a href="#" id="directEmailBtn" class="direct-email-btn">
                 Or Email Directly ✉️
             </a>
         </section>
@@ -411,26 +419,20 @@
         </section>
     </main>
 
-    <!-- Footer -->
     <footer>
         <p>🐾 Made with love for happy puppies in Bellevue 💕</p>
         <p><strong>For all booking inquiries, please contact here:</strong></p>
-        <p><a href="https://mail.google.com/mail/?view=cm&fs=1&to=grace.de.kim@gmail.com" target="_blank">grace.de.kim@gmail.com</a></p>
+        <p><a href="#" id="footerEmailBtn">grace.de.kim@gmail.com</a></p>
     </footer>
 
     <script>
-        // FIXED: Form Submission Logic completely locked into the dynamic Gmail Tab composition
+        // Form Action Interceptor: Formulates parameters natively before submission fires to the new tab
         document.getElementById('bookingForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-
             const clientName = document.getElementById('name').value;
             const puppyName = document.getElementById('puppy-name').value;
             const checkIn = document.getElementById('check-in').value;
             const checkOut = document.getElementById('check-out').value;
             const notes = document.getElementById('notes').value || "None";
-
-            const emailTo = "grace.de.kim@gmail.com";
-            const subject = encodeURIComponent(`🐾 New Booking Request from ${clientName}`);
             
             const bodyMessage = `Hello Momo Dog Sitting!\n\n` +
                                 `You have received a new booking request with the details below:\n\n` +
@@ -441,10 +443,22 @@
                                 `📝 Special Notes: ${notes}\n\n` +
                                 `Thank you!`;
 
-            const body = encodeURIComponent(bodyMessage);
-            const gmailTabUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${emailTo}&su=${subject}&body=${body}`;
+            // Inject inputs directly into the hidden fields before form navigation takes place
+            document.getElementById('hiddenSubject').value = `🐾 New Booking Request from ${clientName}`;
+            document.getElementById('hiddenBody').value = bodyMessage;
+        });
 
-            window.open(gmailTabUrl, '_blank');
+        // Forced Web-Route handler for the "Or Email Directly" Button from Screenshot 2026-06-27 at 2.31.00 AM.png
+        document.getElementById('directEmailBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetUrl = "https://mail.google.com/mail/?view=cm&fs=1&to=grace.de.kim@gmail.com&su=" + encodeURIComponent("🐾 Direct Inquiry for Momo Dog Sitting");
+            window.open(targetUrl, '_blank');
+        });
+
+        // Forced Web-Route handler for footer email link
+        document.getElementById('footerEmailBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.open("https://mail.google.com/mail/?view=cm&fs=1&to=grace.de.kim@gmail.com", '_blank');
         });
 
         // Smart Desktop vs Mobile Venmo Protocol Handler
@@ -461,7 +475,6 @@
         document.getElementById('igBtn').addEventListener('click', function(e) {
             e.preventDefault();
             const start = Date.now();
-            
             window.location.href = "instagram://user?username=Gracie.kimmie";
             
             setTimeout(function() {
