@@ -311,7 +311,7 @@
                 <button type="submit" class="submit-btn">Send Booking Request 🐾</button>
             </form>
 
-            <!-- 1) Direct Email Shortcut Option -->
+            <!-- Direct Email Shortcut Option -->
             <a href="mailto:grace.de.kim@gmail.com?subject=🐾%20Direct%20Inquiry%20for%20Momo%20Dog%20Sitting" class="direct-email-btn">
                 Or Email Directly ✉️
             </a>
@@ -324,11 +324,11 @@
                 <li>🏠 <strong>Overnight stay:</strong> $60 / night</li>
                 <li>☀️ <strong>Daily Visit (9am-6pm working day):</strong> $40</li>
             </ul>
-            
-            <!-- 2) High-compatibility Venmo Button Link -->
-            <a href="https://venmo.com/u/gracedkim" target="_blank" class="venmo-link-btn">
+             
+            <!-- Smart App-Launching Venmo Link -->
+            <a href="venmo://paycharge?txn=pay&recipients=gracedkim&note=Momo%20Dog%20Sitting%20Booking" id="venmoBtn" class="venmo-link-btn">
                 <div class="pink-dollar-icon">$</div>
-                <div class="venmo-id-text">@gracedkim</div>
+                <div class="venmo-id-text">Pay with Venmo</div>
             </a>
         </section>
     </main>
@@ -341,6 +341,7 @@
     </footer>
 
     <script>
+        // Form Email Dynamic Submission Logic
         document.getElementById('bookingForm').addEventListener('submit', function(event) {
             event.preventDefault();
 
@@ -354,7 +355,7 @@
             const subject = encodeURIComponent(`🐾 New Booking Request from ${clientName}`);
             
             const bodyMessage = `Hello Momo Dog Sitting!\n\n` +
-                                `You have received a new booking request details below:\n\n` +
+                                `You have received a new booking request with the details below:\n\n` +
                                 `👤 Client Name: ${clientName}\n` +
                                 `🐶 Puppy's Name: ${puppyName}\n` +
                                 `📅 Check-In: ${checkIn}\n` +
@@ -363,7 +364,29 @@
                                 `Thank you!`;
 
             const body = encodeURIComponent(bodyMessage);
-            window.location.href = `mailto:${emailTo}?subject=${subject}&body=${body}`;
+            const mailtoUrl = `mailto:${emailTo}?subject=${subject}&body=${body}`;
+
+            const mailLink = document.createElement('a');
+            mailLink.href = mailtoUrl;
+            mailLink.style.display = 'none';
+            document.body.appendChild(mailLink);
+            mailLink.click();
+            document.body.removeChild(mailLink);
+
+            alert("🐾 Launching your email app! Please review and click hit send to submit your booking to Grace.");
+        });
+
+        // Smart Desktop vs Mobile Venmo Protocol Handler
+        document.getElementById('venmoBtn').addEventListener('click', function(e) {
+            // Give the app a split second to launch via the venmo:// protocol
+            const start = Date.now();
+            setTimeout(function() {
+                // If the window is still focused and less than 1.5s passed, the mobile app probably isn't installed
+                if (Date.now() - start < 1500) {
+                    // Fall back cleanly to opening your web profile in a new tab instead
+                    window.open("https://venmo.com/u/gracedkim", "_blank");
+                }
+            }, 500);
         });
     </script>
 
