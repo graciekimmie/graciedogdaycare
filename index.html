@@ -155,11 +155,29 @@
             background-color: #E8B5C0;
         }
 
-        .submit-btn:active {
-            transform: scale(0.99);
+        /* Direct Email Secondary Button Styling */
+        .direct-email-btn {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            width: 100%;
+            background-color: #FAFAFA;
+            color: #6B6B6B;
+            border: 1px dashed #D06A80;
+            padding: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 15px;
         }
 
-        /* Pricing & Small Venmo Box Container */
+        .direct-email-btn:hover {
+            background-color: #FFF0F2;
+            color: #D06A80;
+        }
+
         .info-container {
             background: #FFFFFF;
             border-radius: 24px;
@@ -182,8 +200,8 @@
             color: #4A4A4A;
         }
 
-        /* Compact Venmo Row Style */
-        .venmo-box {
+        /* Clickable Venmo Box / Button Styling */
+        .venmo-link-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -192,9 +210,20 @@
             border-radius: 20px;
             padding: 12px 25px;
             gap: 15px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.1s, background-color 0.2s;
         }
 
-        /* Cute Pink $ Icon */
+        .venmo-link-btn:hover {
+            background-color: #FFE3E8;
+            transform: translateY(-2px);
+        }
+
+        .venmo-link-btn:active {
+            transform: translateY(0);
+        }
+
         .pink-dollar-icon {
             background-color: #FFD1DC;
             color: #D06A80;
@@ -233,6 +262,7 @@
 </head>
 <body>
 
+    <!-- Header -->
     <header>
         <h1>🐶 Momo Dog Sitting</h1>
         <div class="subtitle">Where puppies will feel at home in downtown Bellevue!</div>
@@ -240,6 +270,7 @@
     </header>
 
     <main>
+        <!-- VIP Puppies Section -->
         <h2 class="section-title">✨ VIP Puppies ✨</h2>
         <section class="puppy-grid">
             <div class="puppy-card">
@@ -254,6 +285,7 @@
             </div>
         </section>
 
+        <!-- Booking Request Form -->
         <h2 class="section-title">📅 Booking Request</h2>
         <section class="booking-container">
             <form id="bookingForm">
@@ -284,8 +316,14 @@
 
                 <button type="submit" class="submit-btn">Send Booking Request 🐾</button>
             </form>
+
+            <!-- Direct Email Shortcut Link requested -->
+            <a href="mailto:grace.de.kim@gmail.com?subject=🐾%20Inquiry%20for%20Momo%20Dog%20Sitting" class="direct-email-btn">
+                Or Email Directly ✉️
+            </a>
         </section>
 
+        <!-- Pricing & Venmo Block Below Booking -->
         <h2 class="section-title">💰 Pricing & Rates</h2>
         <section class="info-container">
             <ul class="price-list">
@@ -293,13 +331,15 @@
                 <li>☀️ <strong>Daily Visit (9am-6pm working day):</strong> $40</li>
             </ul>
             
-            <div class="venmo-box">
+            <!-- Clickable Venmo App Button -->
+            <a href="venmo://users/gracedkim" id="venmoButton" class="venmo-link-btn">
                 <div class="pink-dollar-icon">$</div>
                 <div class="venmo-id-text">@gracedkim</div>
-            </div>
+            </a>
         </section>
     </main>
 
+    <!-- Footer -->
     <footer>
         <p>🐾 Made with love for happy puppies in Bellevue 💕</p>
         <p><strong>For all booking inquiries, please contact here:</strong></p>
@@ -307,6 +347,7 @@
     </footer>
 
     <script>
+        // Form Handler for Structured Booking Request
         document.getElementById('bookingForm').addEventListener('submit', function(event) {
             event.preventDefault();
 
@@ -329,8 +370,18 @@
                                 `Thank you!`;
 
             const body = encodeURIComponent(bodyMessage);
-
             window.location.href = `mailto:${emailTo}?subject=${subject}&body=${body}`;
+        });
+
+        // Web Fallback for Venmo Button if app deep-linking fails (like on desktop)
+        document.getElementById('venmoButton').addEventListener('click', function(e) {
+            const start = Date.now();
+            setTimeout(function() {
+                // If 1.5 seconds pass and page hasn't hidden, app didn't open -> redirect to web link
+                if (Date.now() - start < 1500) {
+                    window.location.href = "https://venmo.com/gracedkim";
+                }
+            }, 500);
         });
     </script>
 
