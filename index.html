@@ -155,7 +155,6 @@
             background-color: #E8B5C0;
         }
 
-        /* Direct Email Secondary Button Styling */
         .direct-email-btn {
             display: block;
             text-align: center;
@@ -200,7 +199,6 @@
             color: #4A4A4A;
         }
 
-        /* Clickable Venmo Box / Button Styling */
         .venmo-link-btn {
             display: inline-flex;
             align-items: center;
@@ -218,10 +216,6 @@
         .venmo-link-btn:hover {
             background-color: #FFE3E8;
             transform: translateY(-2px);
-        }
-
-        .venmo-link-btn:active {
-            transform: translateY(0);
         }
 
         .pink-dollar-icon {
@@ -317,8 +311,8 @@
                 <button type="submit" class="submit-btn">Send Booking Request 🐾</button>
             </form>
 
-            <!-- Direct Email Shortcut Link requested -->
-            <a href="mailto:grace.de.kim@gmail.com?subject=🐾%20Inquiry%20for%20Momo%20Dog%20Sitting" class="direct-email-btn">
+            <!-- 1) Direct Email Shortcut Option -->
+            <a href="mailto:grace.de.kim@gmail.com?subject=🐾%20Direct%20Inquiry%20for%20Momo%20Dog%20Sitting" class="direct-email-btn">
                 Or Email Directly ✉️
             </a>
         </section>
@@ -331,8 +325,8 @@
                 <li>☀️ <strong>Daily Visit (9am-6pm working day):</strong> $40</li>
             </ul>
             
-            <!-- Clickable Venmo App Button -->
-            <a href="venmo://users/gracedkim" id="venmoButton" class="venmo-link-btn">
+            <!-- 2) High-compatibility Venmo Button Link -->
+            <a href="https://venmo.com/u/gracedkim" target="_blank" class="venmo-link-btn">
                 <div class="pink-dollar-icon">$</div>
                 <div class="venmo-id-text">@gracedkim</div>
             </a>
@@ -347,7 +341,6 @@
     </footer>
 
     <script>
-        // Form Handler for Structured Booking Request
         document.getElementById('bookingForm').addEventListener('submit', function(event) {
             event.preventDefault();
 
@@ -371,17 +364,6 @@
 
             const body = encodeURIComponent(bodyMessage);
             window.location.href = `mailto:${emailTo}?subject=${subject}&body=${body}`;
-        });
-
-        // Web Fallback for Venmo Button if app deep-linking fails (like on desktop)
-        document.getElementById('venmoButton').addEventListener('click', function(e) {
-            const start = Date.now();
-            setTimeout(function() {
-                // If 1.5 seconds pass and page hasn't hidden, app didn't open -> redirect to web link
-                if (Date.now() - start < 1500) {
-                    window.location.href = "https://venmo.com/gracedkim";
-                }
-            }, 500);
         });
     </script>
 
