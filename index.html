@@ -25,7 +25,7 @@
             position: relative;
         }
 
-        /* --- FIXED: Cute Rounded Square Instagram Badge --- */
+        /* --- Cute Rounded Square Instagram Badge --- */
         .ig-top-badge {
             position: absolute;
             top: 25px;
@@ -33,7 +33,7 @@
             background: #FFF0F2;
             width: 85px;
             height: 85px;
-            border-radius: 18px; /* Cute round-square shape */
+            border-radius: 18px;
             text-decoration: none;
             color: #D06A80;
             box-shadow: 0 6px 16px rgba(208, 106, 128, 0.15);
@@ -51,7 +51,6 @@
             box-shadow: 0 8px 22px rgba(208, 106, 128, 0.25);
         }
 
-        /* FIXED: Puppy icon head wrap */
         .puppy-head-container {
             position: relative;
             width: 22px;
@@ -59,22 +58,21 @@
             margin-bottom: 6px;
         }
 
-        /* Custom Brown Puppy Head Base (Styled after Mocha & Toto) */
+        /* Mocha & Toto Coat Profile Color */
         .puppy-icon {
             width: 22px;
             height: 16px;
-            background: #C49A82; /* Cute mocha brown puppy face coat */
+            background: #C49A82; 
             border-radius: 10px 10px 6px 6px;
             position: absolute;
             top: 0;
             left: 0;
         }
 
-        /* Floppy puppy ears */
         .puppy-icon::before, .puppy-icon::after {
             content: '';
             position: absolute;
-            background: #8B5A42; /* Darker brown floppy puppy ears */
+            background: #8B5A42; 
             width: 6px;
             height: 11px;
             border-radius: 4px;
@@ -83,7 +81,6 @@
         .puppy-icon::before { left: -4px; transform: rotate(-10deg); }
         .puppy-icon::after { right: -4px; transform: rotate(10deg); }
 
-        /* FIXED: Little puppy nose core using standard pseudo element layout */
         .puppy-nose {
             position: absolute;
             width: 4px;
@@ -350,7 +347,6 @@
 
     <!-- Header -->
     <header>
-        <!-- Cute Rounded Square Badge with Mocha/Toto Style Puppy Face -->
         <a href="instagram://user?username=Gracie.kimmie" id="igBtn" target="_blank" class="ig-top-badge">
             <div class="puppy-head-container">
                 <div class="puppy-icon"></div>
@@ -380,10 +376,10 @@
             </div>
         </section>
 
-        <!-- FIXED ONE-CLICK Formspree endpoint aimed directly at your verified email layout -->
+        <!-- Booking Request Form Section - UPDATED WITH DIRECT EMAIL ROUTE -->
         <h2 class="section-title">📅 Booking Request</h2>
         <section class="booking-container">
-            <form id="bookingForm" action="https://formspree.io/f/mqakpylg" method="POST">
+            <form id="bookingForm" action="https://formspree.io/f/grace.de.kim@gmail.com" method="POST">
                 <div class="form-group">
                     <label for="name">Your Name</label>
                     <input type="text" name="Client Name" id="name" required>
@@ -439,7 +435,6 @@
     </footer>
 
     <script>
-        // CLEAN ONE-CLICK BACKGROUND SUBMITTER
         const form = document.getElementById('bookingForm');
         const button = document.getElementById('submitBtn');
 
@@ -458,32 +453,29 @@
                 });
 
                 if (response.ok) {
-                    alert("✨ Booking request successfully sent right to Grace! 🐶🐾");
+                    alert("✨ Booking request successfully initialized! Please check your grace.de.kim@gmail.com email for Formspree's first-time verification link to activate it. 🐶🐾");
                     form.reset();
                 } else {
-                    alert("Oops! Something went wrong. Please try using the 'Or Email Directly' link below.");
+                    alert("Oops! Formspree needs first-time setup activation. Please check your inbox or spam folder.");
                 }
             } catch (error) {
-                alert("Oops! Connection error. Please try using the 'Or Email Directly' link below.");
+                alert("Oops! Connection error. Try using the direct link below.");
             } finally {
                 button.disabled = false;
                 button.innerText = "Send Booking Request 🐾";
             }
         });
 
-        // Backup Direct Email Link
         document.getElementById('directEmailBtn').addEventListener('click', function(e) {
             e.preventDefault();
             window.open("https://mail.google.com/mail/?view=cm&fs=1&to=grace.de.kim@gmail.com&su=" + encodeURIComponent("🐾 Direct Inquiry for Momo Dog Sitting"), '_blank');
         });
 
-        // Footer Link
         document.getElementById('footerEmailBtn').addEventListener('click', function(e) {
             e.preventDefault();
             window.open("https://mail.google.com/mail/?view=cm&fs=1&to=grace.de.kim@gmail.com", '_blank');
         });
 
-        // Venmo Handler
         document.getElementById('venmoBtn').addEventListener('click', function(e) {
             const start = Date.now();
             setTimeout(function() {
@@ -493,7 +485,6 @@
             }, 500);
         });
 
-        // Instagram Switcher
         document.getElementById('igBtn').addEventListener('click', function(e) {
             e.preventDefault();
             const start = Date.now();
