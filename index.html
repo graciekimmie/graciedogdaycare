@@ -1,8 +1,12 @@
-Here is the final version of your website code with a brand new, beautifully custom-designed Instagram badge!
+Here is your completely updated code file. I have completely redesigned the top-right Instagram badge into a **larger, perfect circle** themed around your puppy care brand.
 
-I have modified the top-right button to be a **perfectly rounded square tile** styled in a gorgeous, soft pastel pink. To make it extra charming, I used CSS to design **delicate little cherry blossom flowers with glowing yellow centers** that sit perfectly perched on top of the square box! I also boosted the font size of your handle slightly so it stands out beautifully.
+Inside this round pink badge, you will now see:
 
-Here is your complete, ready-to-go code block:
+* A custom, hand-crafted CSS **flower background layout**.
+* A super cute **miniature cartoon dog face icon** sitting right in the center.
+* Your larger handle text sitting perfectly underneath the icon.
+
+Here is your ready-to-go, updated single-click booking file:
 
 ```html
 <!DOCTYPE html>
@@ -28,19 +32,19 @@ Here is your complete, ready-to-go code block:
         header {
             background-color: #FFD1DC;
             text-align: center;
-            padding: 70px 20px 60px 20px;
+            padding: 80px 20px 60px 20px;
             position: relative;
         }
 
-        /* --- Super Cute Square Instagram Badge with Flowers On Top --- */
+        /* --- Super Cute Large Circular Floral Doggy Instagram Badge --- */
         .ig-top-badge {
             position: absolute;
             top: 25px;
             right: 25px;
             background: #FFF0F2;
-            width: 76px;
-            height: 76px;
-            border-radius: 16px; /* Cute rounded square */
+            width: 90px;  /* Made slightly bigger */
+            height: 90px; /* Perfect round diameter */
+            border-radius: 50%; /* Complete round shape */
             text-decoration: none;
             color: #D06A80;
             box-shadow: 0 6px 16px rgba(208, 106, 128, 0.15);
@@ -58,82 +62,62 @@ Here is your complete, ready-to-go code block:
             box-shadow: 0 8px 22px rgba(208, 106, 128, 0.25);
         }
 
-        /* Instagram Handle text inside square */
-        .ig-handle-text {
-            font-size: 0.95rem; /* Lightly bigger font size */
-            font-weight: 700;
-            margin-top: 4px;
-            text-align: center;
-            line-height: 1.1;
-        }
-
-        /* Custom Pure CSS Camera Icon */
-        .ig-square-icon {
-            width: 18px;
-            height: 18px;
-            border: 2px solid #D06A80;
-            border-radius: 5px;
-            position: relative;
-        }
-
-        .ig-square-icon::before {
-            content: '';
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            border: 2px solid #D06A80;
+        /* Flower Shape Core Wrapper */
+        .badge-flower-shape {
+            width: 32px;
+            height: 32px;
+            background: #FFB7C5; /* Cute pink petal backdrop */
             border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        /* --- Flowers Perched On Top of the Box --- */
-        .flower-cluster {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
+            position: relative;
             display: flex;
-            gap: 2px;
-            pointer-events: none;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2px;
         }
 
-        /* Individual Cute Pink Flower Details */
-        .mini-flower {
-            width: 14px;
-            height: 14px;
-            background: #FFB7C5; /* Beautiful soft pink petal color */
-            border-radius: 50%;
-            position: relative;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-
-        /* Glowing center of the flower */
-        .mini-flower::after {
+        /* Flower shape petal rotation overlap layout */
+        .badge-flower-shape::before {
             content: '';
             position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #FFF3A1; /* Cute yellow flower core */
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        /* Extra petals layout design */
-        .mini-flower::before {
-            content: '';
-            position: absolute;
-            width: 14px;
-            height: 14px;
+            width: 32px;
+            height: 32px;
             background: #FFB7C5;
             border-radius: 50%;
             transform: rotate(45deg);
+            z-index: 1;
+        }
+
+        /* --- Custom Pure CSS Cute Dog Icon --- */
+        .cute-dog-icon {
+            width: 18px;
+            height: 14px;
+            background: #FFFFFF; /* Dog head base color */
+            border-radius: 9px 9px 6px 6px;
+            position: relative;
+            z-index: 2; /* Sits completely on top of flower shapes */
+            margin-top: 2px;
+        }
+
+        /* Cute floppy ears */
+        .cute-dog-icon::before, .cute-dog-icon::after {
+            content: '';
+            position: absolute;
+            background: #D06A80; /* Pink floppy ears */
+            width: 5px;
+            height: 9px;
+            border-radius: 3px;
             top: 0;
-            left: 0;
-            z-index: -1;
+        }
+        .cute-dog-icon::before { left: -3px; transform: rotate(-15deg); }
+        .cute-dog-icon::after { right: -3px; transform: rotate(15deg); }
+
+        /* Instagram Handle Text formatting underneath */
+        .ig-handle-text {
+            font-size: 0.95rem; /* Slightly larger format */
+            font-weight: 700;
+            text-align: center;
+            line-height: 1.1;
+            z-index: 2;
         }
 
         header h1 {
@@ -365,10 +349,9 @@ Here is your complete, ready-to-go code block:
             font-weight: 600;
         }
 
-        /* Layout adjustment to center the square badge beautifully on small phone screens */
         @media (max-width: 600px) {
             header {
-                padding-top: 110px;
+                padding-top: 130px;
             }
             .ig-top-badge {
                 top: 20px;
@@ -385,13 +368,11 @@ Here is your complete, ready-to-go code block:
 
     <!-- Header -->
     <header>
-        <!-- Cute Square Floral Instagram Badge -->
+        <!-- Beautiful Big Round Floral Doggy Instagram Badge -->
         <a href="instagram://user?username=Gracie.kimmie" id="igBtn" target="_blank" class="ig-top-badge">
-            <div class="flower-cluster">
-                <div class="mini-flower"></div>
-                <div class="mini-flower" style="transform: scale(0.85); margin-top: 2px;"></div>
+            <div class="badge-flower-shape">
+                <div class="cute-dog-icon"></div>
             </div>
-            <span class="ig-square-icon"></span>
             <div class="ig-handle-text">Gracie.<br>kimmie</div>
         </a>
 
@@ -419,39 +400,33 @@ Here is your complete, ready-to-go code block:
         <!-- Booking Request Form -->
         <h2 class="section-title">📅 Booking Request</h2>
         <section class="booking-container">
-            <form id="bookingForm" method="GET" action="https://mail.google.com/mail/" target="_blank">
-                <input type="hidden" name="view" value="cm">
-                <input type="hidden" name="fs" value="1">
-                <input type="hidden" name="to" value="grace.de.kim@gmail.com">
-                <input type="hidden" name="su" id="hiddenSubject">
-                <input type="hidden" name="body" id="hiddenBody">
-
+            <form id="bookingForm" action="https://formspree.io/f/mqakpylg" method="POST">
                 <div class="form-group">
                     <label for="name">Your Name</label>
-                    <input type="text" id="name" required>
+                    <input type="text" name="Client Name" id="name" required>
                 </div>
 
                 <div class="form-group">
                     <label for="puppy-name">Puppy's Name</label>
-                    <input type="text" id="puppy-name" required>
+                    <input type="text" name="Puppy Name" id="puppy-name" required>
                 </div>
 
                 <div class="form-group">
                     <label for="check-in">Check-In Date</label>
-                    <input type="date" id="check-in" required>
+                    <input type="date" name="Check-In" id="check-in" required>
                 </div>
 
                 <div class="form-group">
                     <label for="check-out">Check-Out Date</label>
-                    <input type="date" id="check-out" required>
+                    <input type="date" name="Check-Out" id="check-out" required>
                 </div>
 
                 <div class="form-group">
                     <label for="notes">Special Notes</label>
-                    <textarea id="notes"></textarea>
+                    <textarea name="Special Notes" id="notes"></textarea>
                 </div>
 
-                <button type="submit" class="submit-btn">Send Booking Request 🐾</button>
+                <button type="submit" id="submitBtn" class="submit-btn">Send Booking Request 🐾</button>
             </form>
 
             <a href="#" id="directEmailBtn" class="direct-email-btn">
@@ -481,41 +456,47 @@ Here is your complete, ready-to-go code block:
     </footer>
 
     <script>
-        // Form execution parameters targeting Gmail Web Tab exclusively
-        document.getElementById('bookingForm').addEventListener('submit', function(event) {
-            const clientName = document.getElementById('name').value;
-            const puppyName = document.getElementById('puppy-name').value;
-            const checkIn = document.getElementById('check-in').value;
-            const checkOut = document.getElementById('check-out').value;
-            const notes = document.getElementById('notes').value || "None";
-            
-            const bodyMessage = `Hello Momo Dog Sitting!\n\n` +
-                                `You have received a new booking request with the details below:\n\n` +
-                                `👤 Client Name: ${clientName}\n` +
-                                `🐶 Puppy's Name: ${puppyName}\n` +
-                                `📅 Check-In: ${checkIn}\n` +
-                                `📅 Check-Out: ${checkOut}\n` +
-                                `📝 Special Notes: ${notes}\n\n` +
-                                `Thank you!`;
+        const form = document.getElementById('bookingForm');
+        const button = document.getElementById('submitBtn');
 
-            document.getElementById('hiddenSubject').value = `🐾 New Booking Request from ${clientName}`;
-            document.getElementById('hiddenBody').value = bodyMessage;
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            button.disabled = true;
+            button.innerText = "Sending... 🐾";
+
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetch(form.action, {
+                    method: form.method,
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    alert("✨ Booking request successfully sent right to Grace! 🐶🐾");
+                    form.reset();
+                } else {
+                    alert("Oops! Something went wrong. Please try using the 'Or Email Directly' link below.");
+                }
+            } catch (error) {
+                alert("Oops! Connection error. Please try using the 'Or Email Directly' link below.");
+            } finally {
+                button.disabled = false;
+                button.innerText = "Send Booking Request 🐾";
+            }
         });
 
-        // Direct Email Button bypass routing 
         document.getElementById('directEmailBtn').addEventListener('click', function(e) {
             e.preventDefault();
-            const targetUrl = "https://mail.google.com/mail/?view=cm&fs=1&to=grace.de.kim@gmail.com&su=" + encodeURIComponent("🐾 Direct Inquiry for Momo Dog Sitting");
-            window.open(targetUrl, '_blank');
+            window.open("https://mail.google.com/mail/?view=cm&fs=1&to=grace.de.kim@gmail.com&su=" + encodeURIComponent("🐾 Direct Inquiry for Momo Dog Sitting"), '_blank');
         });
 
-        // Footer Email link routing
         document.getElementById('footerEmailBtn').addEventListener('click', function(e) {
             e.preventDefault();
             window.open("https://mail.google.com/mail/?view=cm&fs=1&to=grace.de.kim@gmail.com", '_blank');
         });
 
-        // Smart Desktop vs Mobile Venmo Protocol Handler
         document.getElementById('venmoBtn').addEventListener('click', function(e) {
             const start = Date.now();
             setTimeout(function() {
@@ -525,7 +506,6 @@ Here is your complete, ready-to-go code block:
             }, 500);
         });
 
-        // Smart Desktop vs Mobile Instagram App Protocol Switcher
         document.getElementById('igBtn').addEventListener('click', function(e) {
             e.preventDefault();
             const start = Date.now();
