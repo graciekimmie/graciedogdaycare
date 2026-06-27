@@ -224,32 +224,11 @@
             cursor: pointer;
             transition: background-color 0.2s, transform 0.1s;
             margin-top: 10px;
+            text-align: center;
         }
 
         .submit-btn:hover {
             background-color: #E8B5C0;
-        }
-
-        .direct-email-btn {
-            display: block;
-            text-align: center;
-            text-decoration: none;
-            width: 100%;
-            background-color: #FAFAFA;
-            color: #6B6B6B;
-            border: 1px dashed #D06A80;
-            padding: 12px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            margin-top: 15px;
-        }
-
-        .direct-email-btn:hover {
-            background-color: #FFF0F2;
-            color: #D06A80;
         }
 
         .info-container {
@@ -376,41 +355,37 @@
             </div>
         </section>
 
-        <!-- Booking Request Form Section - UPDATED WITH DIRECT EMAIL ROUTE -->
+        <!-- Booking Request Form Section - EMAIL-ONLY GENERATION -->
         <h2 class="section-title">📅 Booking Request</h2>
         <section class="booking-container">
-            <form id="bookingForm" action="https://formspree.io/f/grace.de.kim@gmail.com" method="POST">
+            <form id="bookingForm">
                 <div class="form-group">
                     <label for="name">Your Name</label>
-                    <input type="text" name="Client Name" id="name" required>
+                    <input type="text" id="name" required>
                 </div>
 
                 <div class="form-group">
                     <label for="puppy-name">Puppy's Name</label>
-                    <input type="text" name="Puppy Name" id="puppy-name" required>
+                    <input type="text" id="puppy-name" required>
                 </div>
 
                 <div class="form-group">
                     <label for="check-in">Check-In Date</label>
-                    <input type="date" name="Check-In Date" id="check-in" required>
+                    <input type="date" id="check-in" required>
                 </div>
 
                 <div class="form-group">
                     <label for="check-out">Check-Out Date</label>
-                    <input type="date" name="Check-Out Date" id="check-out" required>
+                    <input type="date" id="check-out" required>
                 </div>
 
                 <div class="form-group">
                     <label for="notes">Special Notes</label>
-                    <textarea name="Special Notes" id="notes"></textarea>
+                    <textarea id="notes"></textarea>
                 </div>
 
-                <button type="submit" id="submitBtn" class="submit-btn">Send Booking Request 🐾</button>
+                <button type="submit" id="submitBtn" class="submit-btn">Draft Email Request ✉️</button>
             </form>
-
-            <a href="#" id="directEmailBtn" class="direct-email-btn">
-                Or Email Directly ✉️
-            </a>
         </section>
 
         <!-- Pricing & Rates Section -->
@@ -436,39 +411,34 @@
 
     <script>
         const form = document.getElementById('bookingForm');
-        const button = document.getElementById('submitBtn');
 
-        form.addEventListener('submit', async function(event) {
+        form.addEventListener('submit', function(event) {
             event.preventDefault();
-            button.disabled = true;
-            button.innerText = "Sending... 🐾";
 
-            const formData = new FormData(form);
+            // Pull information from input elements
+            const clientName = document.getElementById('name').value;
+            const puppyName = document.getElementById('puppy-name').value;
+            const checkIn = document.getElementById('check-in').value;
+            const checkOut = document.getElementById('check-out').value;
+            const specialNotes = document.getElementById('notes').value || "None";
 
-            try {
-                const response = await fetch(form.action, {
-                    method: form.method,
-                    body: formData,
-                    headers: { 'Accept': 'application/json' }
-                });
+            // Craft email subject and body template
+            const subject = `🐾 Momo Dog Sitting Booking Request - ${puppyName}`;
+            const body = `Hi Gracie,\n\nI'd love to request a booking for my pup! Here are the details:\n\n` +
+                         `• Client Name: ${clientName}\n` +
+                         `• Puppy Name: ${puppyName}\n` +
+                         `• Check-In: ${checkIn}\n` +
+                         `• Check-Out: ${checkOut}\n\n` +
+                         `Special Notes:\n${specialNotes}\n\n` +
+                         `Looking forward to hearing from you!`;
 
-                if (response.ok) {
-                    alert("✨ Booking request successfully initialized! Please check your grace.de.kim@gmail.com email for Formspree's first-time verification link to activate it. 🐶🐾");
-                    form.reset();
-                } else {
-                    alert("Oops! Formspree needs first-time setup activation. Please check your inbox or spam folder.");
-                }
-            } catch (error) {
-                alert("Oops! Connection error. Try using the direct link below.");
-            } finally {
-                button.disabled = false;
-                button.innerText = "Send Booking Request 🐾";
-            }
-        });
+            // Open up the predefined Gmail window mapping directly to your address
+            const gmailUrl = "https://mail.google.com/mail/?view=cm&fs=1" +
+                             "&to=grace.de.kim@gmail.com" +
+                             "&su=" + encodeURIComponent(subject) +
+                             "&body=" + encodeURIComponent(body);
 
-        document.getElementById('directEmailBtn').addEventListener('click', function(e) {
-            e.preventDefault();
-            window.open("https://mail.google.com/mail/?view=cm&fs=1&to=grace.de.kim@gmail.com&su=" + encodeURIComponent("🐾 Direct Inquiry for Momo Dog Sitting"), '_blank');
+            window.open(gmailUrl, '_blank');
         });
 
         document.getElementById('footerEmailBtn').addEventListener('click', function(e) {
