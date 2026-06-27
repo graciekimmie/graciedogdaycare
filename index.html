@@ -22,6 +22,66 @@
             background-color: #FFD1DC;
             text-align: center;
             padding: 60px 20px;
+            position: relative;
+        }
+
+        /* Cute Instagram Top Right Link Styling */
+        .ig-top-link {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #FFFFFF;
+            padding: 10px 18px;
+            border-radius: 30px;
+            text-decoration: none;
+            color: #E1306C; /* Instagram signature pink/red accent */
+            font-weight: 700;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 15px rgba(225, 48, 108, 0.15);
+            transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1.5px solid #FFE4E9;
+        }
+
+        .ig-top-link:hover {
+            background-color: #FFF0F2;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(225, 48, 108, 0.25);
+        }
+
+        /* Custom pure CSS ultra-cute Instagram Icon */
+        .ig-icon {
+            width: 16px;
+            height: 16px;
+            border: 2px solid #E1306C;
+            border-radius: 4px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .ig-icon::before {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border: 2px solid #E1306C;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .ig-icon::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: #E1306C;
+            border-radius: 50%;
+            top: 1px;
+            right: 1px;
         }
 
         header h1 {
@@ -252,12 +312,31 @@
             text-decoration: underline;
             font-weight: 600;
         }
+
+        @media (max-width: 600px) {
+            header {
+                padding-top: 85px;
+            }
+            .ig-top-link {
+                top: 15px;
+                right: 50%;
+                transform: translateX(50%);
+            }
+            .ig-top-link:hover {
+                transform: translateX(50%) translateY(-2px);
+            }
+        }
     </style>
 </head>
 <body>
 
     <!-- Header -->
     <header>
+        <!-- Cute App-Launching Instagram Link -->
+        <a href="instagram://user?username=Gracie.kimmie" id="igBtn" target="_blank" class="ig-top-link">
+            <span class="ig-icon"></span> @Gracie.kimmie
+        </a>
+
         <h1>🐶 Momo Dog Sitting</h1>
         <div class="subtitle">Where puppies will feel at home in downtown Bellevue!</div>
         <div class="tagline">A cozy, loving home-away-from-home for your furry best friend 💕</div>
@@ -311,7 +390,6 @@
                 <button type="submit" class="submit-btn">Send Booking Request 🐾</button>
             </form>
 
-            <!-- Refactored button from Screenshot 2026-06-27 at 2.31.00 AM.png to open a direct Gmail web tab -->
             <a href="https://mail.google.com/mail/?view=cm&fs=1&to=grace.de.kim@gmail.com&su=%F0%9F%90%BE%20Direct%20Inquiry%20for%20Momo%20Dog%20Sitting" target="_blank" class="direct-email-btn">
                 Or Email Directly ✉️
             </a>
@@ -325,7 +403,6 @@
                 <li>☀️ <strong>Daily Visit (9am-6pm working day):</strong> $40</li>
             </ul>
              
-            <!-- Smart App-Launching Venmo Link -->
             <a href="venmo://paycharge?txn=pay&recipients=gracedkim&note=Momo%20Dog%20Sitting%20Booking" id="venmoBtn" class="venmo-link-btn">
                 <div class="pink-dollar-icon">$</div>
                 <div class="venmo-id-text">Pay with Venmo</div>
@@ -364,11 +441,8 @@
                                 `Thank you!`;
 
             const body = encodeURIComponent(bodyMessage);
-            
-            // Constructs a direct web-based Gmail URL to prevent opening Apple Mail
             const gmailTabUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${emailTo}&su=${subject}&body=${body}`;
 
-            // Safely open the newly structured composition page inside a clean web window tab
             window.open(gmailTabUrl, '_blank');
         });
 
@@ -378,6 +452,22 @@
             setTimeout(function() {
                 if (Date.now() - start < 1500) {
                     window.open("https://venmo.com/u/gracedkim", "_blank");
+                }
+            }, 500);
+        });
+
+        // Smart Desktop vs Mobile Instagram App Protocol Switcher
+        document.getElementById('igBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            const start = Date.now();
+            
+            // Try triggering the native Instagram App pop-up redirect
+            window.location.href = "instagram://user?username=Gracie.kimmie";
+            
+            setTimeout(function() {
+                // Fallback to opening standard web profile tab if app response isn't detected
+                if (Date.now() - start < 1500) {
+                    window.open("https://instagram.com/Gracie.kimmie", "_blank");
                 }
             }, 500);
         });
