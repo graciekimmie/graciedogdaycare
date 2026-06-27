@@ -311,8 +311,8 @@
                 <button type="submit" class="submit-btn">Send Booking Request 🐾</button>
             </form>
 
-            <!-- Direct Email Shortcut Option -->
-            <a href="mailto:grace.de.kim@gmail.com?subject=🐾%20Direct%20Inquiry%20for%20Momo%20Dog%20Sitting" class="direct-email-btn">
+            <!-- Refactored button from Screenshot 2026-06-27 at 2.31.00 AM.png to open a direct Gmail web tab -->
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=grace.de.kim@gmail.com&su=%F0%9F%90%BE%20Direct%20Inquiry%20for%20Momo%20Dog%20Sitting" target="_blank" class="direct-email-btn">
                 Or Email Directly ✉️
             </a>
         </section>
@@ -337,11 +337,11 @@
     <footer>
         <p>🐾 Made with love for happy puppies in Bellevue 💕</p>
         <p><strong>For all booking inquiries, please contact here:</strong></p>
-        <p><a href="mailto:grace.de.kim@gmail.com">grace.de.kim@gmail.com</a></p>
+        <p><a href="https://mail.google.com/mail/?view=cm&fs=1&to=grace.de.kim@gmail.com" target="_blank">grace.de.kim@gmail.com</a></p>
     </footer>
 
     <script>
-        // Form Email Dynamic Submission Logic
+        // Form Email Dynamic Submission Logic optimized for Gmail Web UI
         document.getElementById('bookingForm').addEventListener('submit', function(event) {
             event.preventDefault();
 
@@ -364,26 +364,19 @@
                                 `Thank you!`;
 
             const body = encodeURIComponent(bodyMessage);
-            const mailtoUrl = `mailto:${emailTo}?subject=${subject}&body=${body}`;
+            
+            // Constructs a direct web-based Gmail URL to prevent opening Apple Mail
+            const gmailTabUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${emailTo}&su=${subject}&body=${body}`;
 
-            const mailLink = document.createElement('a');
-            mailLink.href = mailtoUrl;
-            mailLink.style.display = 'none';
-            document.body.appendChild(mailLink);
-            mailLink.click();
-            document.body.removeChild(mailLink);
-
-            alert("🐾 Launching your email app! Please review and click hit send to submit your booking to Grace.");
+            // Safely open the newly structured composition page inside a clean web window tab
+            window.open(gmailTabUrl, '_blank');
         });
 
         // Smart Desktop vs Mobile Venmo Protocol Handler
         document.getElementById('venmoBtn').addEventListener('click', function(e) {
-            // Give the app a split second to launch via the venmo:// protocol
             const start = Date.now();
             setTimeout(function() {
-                // If the window is still focused and less than 1.5s passed, the mobile app probably isn't installed
                 if (Date.now() - start < 1500) {
-                    // Fall back cleanly to opening your web profile in a new tab instead
                     window.open("https://venmo.com/u/gracedkim", "_blank");
                 }
             }, 500);
