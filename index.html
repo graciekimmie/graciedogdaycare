@@ -384,7 +384,7 @@
                     <textarea id="notes"></textarea>
                 </div>
 
-                <button type="submit" id="submitBtn" class="submit-btn">Draft Email Request ✉️</button>
+                <button type="submit" id="submitBtn" class="submit-btn">Email me these booking details ✉️</button>
             </form>
         </section>
 
@@ -415,34 +415,36 @@
         form.addEventListener('submit', function(event) {
             event.preventDefault();
 
-            // Pull values from input elements
+            // Pull values from form elements
             const clientName = document.getElementById('name').value;
             const puppyName = document.getElementById('puppy-name').value;
             const checkIn = document.getElementById('check-in').value;
             const checkOut = document.getElementById('check-out').value;
             const specialNotes = document.getElementById('notes').value || "None";
 
-            // Craft email subject and body template
+            // Format standard text parameters
             const subject = `Momo Dog Sitting Booking Request - ${puppyName}`;
             const body = `Hi Gracie,\n\nI'd love to request a booking for my pup! Here are the details:\n\n` +
                          `• Client Name: ${clientName}\n` +
                          `• Puppy Name: ${puppyName}\n` +
-                         `• Check-In: ${checkIn}\n` +
-                         `• Check-Out: ${checkOut}\n\n` +
+                         `• Check-In Date: ${checkIn}\n` +
+                         `• Check-Out Date: ${checkOut}\n\n` +
                          `Special Notes:\n${specialNotes}\n\n` +
                          `Looking forward to hearing from you!`;
 
-            // Standard mailto link structure assigned to window.location
-            // This safely bypasses browser popup blockers and handles mobile or desktop devices natively.
-            window.location.href = "mailto:grace.de.kim@gmail.com" +
-                                   "?subject=" + encodeURIComponent(subject) +
-                                   "&body=" + encodeURIComponent(body);
+            // Forces Gmail to open directly into a fresh workspace compose window 
+            const gmailUrl = "https://mail.google.com/mail/?view=cm&fs=1" +
+                             "&to=grace.de.kim@gmail.com" +
+                             "&su=" + encodeURIComponent(subject) +
+                             "&body=" + encodeURIComponent(body);
+
+            window.open(gmailUrl, '_blank');
         });
 
         // Universal footer fallback
         document.getElementById('footerEmailBtn').addEventListener('click', function(e) {
             e.preventDefault();
-            window.location.href = "mailto:grace.de.kim@gmail.com";
+            window.open("https://mail.google.com/mail/?view=cm&fs=1&to=grace.de.kim@gmail.com", '_blank');
         });
 
         document.getElementById('venmoBtn').addEventListener('click', function(e) {
