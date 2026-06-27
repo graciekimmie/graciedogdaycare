@@ -21,67 +21,112 @@
         header {
             background-color: #FFD1DC;
             text-align: center;
-            padding: 60px 20px;
+            padding: 70px 20px 60px 20px;
             position: relative;
         }
 
-        /* Cute Instagram Top Right Link Styling */
-        .ig-top-link {
+        /* --- Super Cute Square Instagram Badge with Flowers On Top --- */
+        .ig-top-badge {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            background: #FFFFFF;
-            padding: 10px 18px;
-            border-radius: 30px;
+            top: 25px;
+            right: 25px;
+            background: #FFF0F2;
+            width: 76px;
+            height: 76px;
+            border-radius: 16px; /* Cute rounded square */
             text-decoration: none;
-            color: #E1306C;
-            font-weight: 700;
-            font-size: 0.85rem;
-            box-shadow: 0 4px 15px rgba(225, 48, 108, 0.15);
-            transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
-            display: inline-flex;
+            color: #D06A80;
+            box-shadow: 0 6px 16px rgba(208, 106, 128, 0.15);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 8px;
-            border: 1.5px solid #FFE4E9;
+            justify-content: center;
+            border: 2px solid #FFD1DC;
+            z-index: 10;
         }
 
-        .ig-top-link:hover {
-            background-color: #FFF0F2;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 18px rgba(225, 48, 108, 0.25);
+        .ig-top-badge:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 22px rgba(208, 106, 128, 0.25);
         }
 
-        /* Custom pure CSS ultra-cute Instagram Icon */
-        .ig-icon {
-            width: 16px;
-            height: 16px;
-            border: 2px solid #E1306C;
-            border-radius: 4px;
+        /* Instagram Handle text inside square */
+        .ig-handle-text {
+            font-size: 0.95rem; /* Lightly bigger font size */
+            font-weight: 700;
+            margin-top: 4px;
+            text-align: center;
+            line-height: 1.1;
+        }
+
+        /* Custom Pure CSS Camera Icon */
+        .ig-square-icon {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #D06A80;
+            border-radius: 5px;
             position: relative;
-            display: inline-block;
         }
 
-        .ig-icon::before {
+        .ig-square-icon::before {
             content: '';
             position: absolute;
             width: 4px;
             height: 4px;
-            border: 2px solid #E1306C;
+            border: 2px solid #D06A80;
             border-radius: 50%;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
         }
 
-        .ig-icon::after {
+        /* --- Flowers Perched On Top of the Box --- */
+        .flower-cluster {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 2px;
+            pointer-events: none;
+        }
+
+        /* Individual Cute Pink Flower Details */
+        .mini-flower {
+            width: 14px;
+            height: 14px;
+            background: #FFB7C5; /* Beautiful soft pink petal color */
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        /* Glowing center of the flower */
+        .mini-flower::after {
             content: '';
             position: absolute;
-            width: 2px;
-            height: 2px;
-            background-color: #E1306C;
+            width: 4px;
+            height: 4px;
+            background: #FFF3A1; /* Cute yellow flower core */
             border-radius: 50%;
-            top: 1px;
-            right: 1px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Extra petals layout design */
+        .mini-flower::before {
+            content: '';
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            background: #FFB7C5;
+            border-radius: 50%;
+            transform: rotate(45deg);
+            top: 0;
+            left: 0;
+            z-index: -1;
         }
 
         header h1 {
@@ -313,17 +358,18 @@
             font-weight: 600;
         }
 
+        /* Layout adjustment to center the square badge beautifully on small phone screens */
         @media (max-width: 600px) {
             header {
-                padding-top: 85px;
+                padding-top: 110px;
             }
-            .ig-top-link {
-                top: 15px;
+            .ig-top-badge {
+                top: 20px;
                 right: 50%;
                 transform: translateX(50%);
             }
-            .ig-top-link:hover {
-                transform: translateX(50%) translateY(-2px);
+            .ig-top-badge:hover {
+                transform: translateX(50%) translateY(-3px);
             }
         }
     </style>
@@ -332,8 +378,14 @@
 
     <!-- Header -->
     <header>
-        <a href="instagram://user?username=Gracie.kimmie" id="igBtn" target="_blank" class="ig-top-link">
-            <span class="ig-icon"></span> @Gracie.kimmie
+        <!-- Cute Square Floral Instagram Badge -->
+        <a href="instagram://user?username=Gracie.kimmie" id="igBtn" target="_blank" class="ig-top-badge">
+            <div class="flower-cluster">
+                <div class="mini-flower"></div>
+                <div class="mini-flower" style="transform: scale(0.85); margin-top: 2px;"></div>
+            </div>
+            <span class="ig-square-icon"></span>
+            <div class="ig-handle-text">Gracie.<br>kimmie</div>
         </a>
 
         <h1>🐶 Momo Dog Sitting</h1>
@@ -360,10 +412,7 @@
         <!-- Booking Request Form -->
         <h2 class="section-title">📅 Booking Request</h2>
         <section class="booking-container">
-            
-            <!-- Standard dynamic form routing built explicitly for web view targeting -->
             <form id="bookingForm" method="GET" action="https://mail.google.com/mail/" target="_blank">
-                <!-- Hidden fields that explicitly control the web window settings inside Gmail -->
                 <input type="hidden" name="view" value="cm">
                 <input type="hidden" name="fs" value="1">
                 <input type="hidden" name="to" value="grace.de.kim@gmail.com">
@@ -398,13 +447,12 @@
                 <button type="submit" class="submit-btn">Send Booking Request 🐾</button>
             </form>
 
-            <!-- Screenshot 2026-06-27 at 2.31.00 AM.png button explicitly routed to bypass mobile system interceptors -->
             <a href="#" id="directEmailBtn" class="direct-email-btn">
                 Or Email Directly ✉️
             </a>
         </section>
 
-        <!-- Pricing & Venmo Block Below Booking -->
+        <!-- Pricing & Rates Section -->
         <h2 class="section-title">💰 Pricing & Rates</h2>
         <section class="info-container">
             <ul class="price-list">
@@ -426,7 +474,7 @@
     </footer>
 
     <script>
-        // Form Action Interceptor: Formulates parameters natively before submission fires to the new tab
+        // Form execution parameters targeting Gmail Web Tab exclusively
         document.getElementById('bookingForm').addEventListener('submit', function(event) {
             const clientName = document.getElementById('name').value;
             const puppyName = document.getElementById('puppy-name').value;
@@ -443,19 +491,18 @@
                                 `📝 Special Notes: ${notes}\n\n` +
                                 `Thank you!`;
 
-            // Inject inputs directly into the hidden fields before form navigation takes place
             document.getElementById('hiddenSubject').value = `🐾 New Booking Request from ${clientName}`;
             document.getElementById('hiddenBody').value = bodyMessage;
         });
 
-        // Forced Web-Route handler for the "Or Email Directly" Button from Screenshot 2026-06-27 at 2.31.00 AM.png
+        // Direct Email Button bypass routing 
         document.getElementById('directEmailBtn').addEventListener('click', function(e) {
             e.preventDefault();
             const targetUrl = "https://mail.google.com/mail/?view=cm&fs=1&to=grace.de.kim@gmail.com&su=" + encodeURIComponent("🐾 Direct Inquiry for Momo Dog Sitting");
             window.open(targetUrl, '_blank');
         });
 
-        // Forced Web-Route handler for footer email link
+        // Footer Email link routing
         document.getElementById('footerEmailBtn').addEventListener('click', function(e) {
             e.preventDefault();
             window.open("https://mail.google.com/mail/?view=cm&fs=1&to=grace.de.kim@gmail.com", '_blank');
