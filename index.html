@@ -25,6 +25,34 @@
             position: relative;
         }
 
+        /* --- Cute Floating Audio Controller Button --- */
+        .audio-toggle-btn {
+            position: fixed;
+            top: 25px;
+            right: 130px; /* Sits perfectly next to your Instagram badge */
+            background: #FFF0F2;
+            padding: 10px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            color: #D06A80;
+            font-weight: 700;
+            font-size: 0.85rem;
+            box-shadow: 0 6px 16px rgba(208, 106, 128, 0.15);
+            transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+            border: 2px solid #FFD1DC;
+            cursor: pointer;
+            z-index: 100;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .audio-toggle-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(208, 106, 128, 0.25);
+            background-color: #FFE3E8;
+        }
+
         /* --- Cute Rounded Square Instagram Badge --- */
         .ig-top-badge {
             position: absolute;
@@ -293,16 +321,15 @@
             letter-spacing: 0.5px;
         }
 
-        /* --- Seamless Hidden Audio Engine --- */
-        .hidden-audio-container {
-            position: absolute;
+        /* --- Fully Invisible Audio Node Sandboxing --- */
+        .secure-audio-sandbox {
+            position: fixed;
             width: 1px;
             height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            border: 0;
+            bottom: -100px;
+            left: -100px;
+            opacity: 0;
+            pointer-events: none;
         }
 
         footer {
@@ -321,7 +348,7 @@
 
         @media (max-width: 600px) {
             header {
-                padding-top: 120px;
+                padding-top: 130px;
             }
             .ig-top-badge {
                 top: 20px;
@@ -331,10 +358,18 @@
             .ig-top-badge:hover {
                 transform: translateX(50%) translateY(-3px);
             }
+            .audio-toggle-btn {
+                top: 20px;
+                right: 20px;
+                position: absolute;
+            }
         }
     </style>
 </head>
 <body>
+
+    <!-- Floating Audio Button -->
+    <button id="audioToggleBtn" class="audio-toggle-btn">🔇 Music Off</button>
 
     <!-- Header -->
     <header>
@@ -397,11 +432,6 @@
                 </div>
 
                 <button type="submit" id="submitBtn" class="submit-btn">Email me these booking details ✉️</button>
-                
-                <!-- Completely Invisible Background Player -->
-                <div class="hidden-audio-container">
-                    <iframe id="ytPlayer" src="https://www.youtube.com/embed/3ePVGpy4cNo?enablejsapi=1&autoplay=1&loop=1&playlist=3ePVGpy4cNo" allow="autoplay"></iframe>
-                </div>
             </form>
         </section>
 
@@ -420,6 +450,11 @@
         </section>
     </main>
 
+    <!-- Sandboxed YouTube Iframe node -->
+    <div class="secure-audio-sandbox">
+        <div id="ytPlayer"></div>
+    </div>
+
     <footer>
         <p>🐾 Made with love for happy puppies in Bellevue 💕</p>
         <p><strong>For all booking inquiries, please contact here:</strong></p>
@@ -431,24 +466,88 @@
 
     <script>
         const form = document.getElementById('bookingForm');
+        const audioToggleBtn = document.getElementById('audioToggleBtn');
         let player;
+        let musicPlaying = false;
+        let initialTriggered = false;
 
+        // API initializes player fully out of sight
         function onYouTubeIframeAPIReady() {
-            player = new YT.Player('ytPlayer');
+            player = new YT.Player('ytPlayer', {
+                height: '1',
+                width: '1',
+                videoId: '3ePVGpy4cNo', // Island in the Sun ID
+                playerVars: {
+                    'autoplay': 1,
+                    'loop': 1,
+                    'playlist': '3ePVGpy4cNo',
+                    'controls': 0,
+                    'disablekb': 1
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
         }
 
-        // Seamlessly starts audio on the user's very first scroll, tap, or mouse move
-        function triggerAudio() {
-            if (player && typeof player.playVideo === 'function') {
-                player.playVideo();
+        function onPlayerReady(event) {
+            // Player is ready in background
+        }
+
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.PLAYING) {
+                musicPlaying = true;
+                audioToggleBtn.innerHTML = "🔊 Music On";
+            } else {
+                musicPlaying = false;
+                audioToggleBtn.innerHTML = "🔇 Music Off";
             }
         }
 
-        // Global triggers ensure the page starts singing instantly without needing direct player clicks
-        document.addEventListener('click', triggerAudio, { once: true });
-        document.addEventListener('touchstart', triggerAudio, { once: true });
-        document.addEventListener('scroll', triggerAudio, { once: true });
-        document.addEventListener('mousemove', triggerAudio, { once: true });
+        // Activates the music naturally when user opens up and looks through the page
+        function autoTriggerMusic() {
+            if (!initialTriggered && player && typeof player.playVideo === 'function') {
+                player.playVideo();
+                initialTriggered = true;
+                // Remove listeners once seamless activation completes
+                removeTriggers();
+            }
+        }
+
+        function addTriggers() {
+            document.addEventListener('click', autoTriggerMusic, { once: true });
+            document.addEventListener('touchstart', autoTriggerMusic, { once: true });
+            document.addEventListener('scroll', autoTriggerMusic, { once: true });
+            document.addEventListener('mousemove', autoTriggerMusic, { once: true });
+        }
+
+        function removeTriggers() {
+            document.removeEventListener('click', autoTriggerMusic);
+            document.removeEventListener('touchstart', autoTriggerMusic);
+            document.removeEventListener('scroll', autoTriggerMusic);
+            document.removeEventListener('mousemove', autoTriggerMusic);
+        }
+
+        // Initialize user movement tracking instantly
+        addTriggers();
+
+        // Control toggle button behavior
+        audioToggleBtn.addEventListener('click', function(e) {
+            e.stopPropagation(); // Stops event bubbling triggers
+            if (!initialTriggered) {
+                initialTriggered = true;
+                removeTriggers();
+                player.playVideo();
+                return;
+            }
+            
+            if (musicPlaying) {
+                player.pauseVideo();
+            } else {
+                player.playVideo();
+            }
+        });
 
         form.addEventListener('submit', function(event) {
             event.preventDefault();
