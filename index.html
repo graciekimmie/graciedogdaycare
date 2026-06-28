@@ -293,6 +293,28 @@
             letter-spacing: 0.5px;
         }
 
+        /* --- Audio Player Layout Customizations --- */
+        .audio-wrapper {
+            margin-top: 20px;
+            text-align: center;
+            background: #FAFAFA;
+            border: 1px dashed #FFD1DC;
+            padding: 12px;
+            border-radius: 12px;
+        }
+        .audio-wrapper label {
+            font-size: 0.85rem;
+            color: #6B6B6B;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 8px;
+        }
+        audio {
+            width: 100%;
+            max-width: 280px;
+            height: 36px;
+        }
+
         footer {
             text-align: center;
             padding: 40px 20px;
@@ -385,6 +407,15 @@
                 </div>
 
                 <button type="submit" id="submitBtn" class="submit-btn">Email me these booking details ✉️</button>
+                
+                <!-- Background Music Container -->
+                <div class="audio-wrapper">
+                    <label>🎵 Island in the Sun - Weezer (2001)</label>
+                    <audio id="bgMusic" controls loop>
+                        <source src="your-local-audio-file.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
             </form>
         </section>
 
@@ -411,6 +442,24 @@
 
     <script>
         const form = document.getElementById('bookingForm');
+        const bgMusic = document.getElementById('bgMusic');
+
+        // Cross-platform function to handle secure browser interaction requirements
+        function initiatePlayback() {
+            if (bgMusic.paused) {
+                bgMusic.play()
+                    .then(() => {
+                        console.log("Playback successfully started.");
+                    })
+                    .catch(error => {
+                        console.log("Browser blocked initial automatic playback stream context:", error);
+                    });
+            }
+        }
+
+        // Listens universally for either desktop desktop clicks or mobile taps to break autoplay guardrails safely
+        document.body.addEventListener('click', initiatePlayback, { once: true });
+        document.body.addEventListener('touchstart', initiatePlayback, { once: true });
 
         form.addEventListener('submit', function(event) {
             event.preventDefault();
@@ -432,19 +481,18 @@
                          `Special Notes:\n${specialNotes}\n\n` +
                          `Looking forward to hearing from you!`;
 
-            // Forces Gmail to open directly into a fresh workspace compose window 
-            const gmailUrl = "https://mail.google.com/mail/?view=cm&fs=1" +
-                             "&to=grace.de.kim@gmail.com" +
-                             "&su=" + encodeURIComponent(subject) +
+            // Uses native mailto to bypass web login checks and route straight into the device's logged-in email client/app
+            const mailtoUrl = "mailto:grace.de.kim@gmail.com" +
+                             "?subject=" + encodeURIComponent(subject) +
                              "&body=" + encodeURIComponent(body);
 
-            window.open(gmailUrl, '_blank');
+            window.location.href = mailtoUrl;
         });
 
         // Universal footer fallback
         document.getElementById('footerEmailBtn').addEventListener('click', function(e) {
             e.preventDefault();
-            window.open("https://mail.google.com/mail/?view=cm&fs=1&to=grace.de.kim@gmail.com", '_blank');
+            window.location.href = "mailto:grace.de.kim@gmail.com";
         });
 
         document.getElementById('venmoBtn').addEventListener('click', function(e) {
