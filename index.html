@@ -138,7 +138,7 @@
             font-weight: 600;
             margin-bottom: 10px;
             color: #6B6B6B;
-            }
+        }
 
         header .tagline {
             font-size: 1rem;
@@ -356,12 +356,12 @@
 </head>
 <body>
 
-    <!-- Native Audio Element — Directly links to a verified online MP3 stream -->
+    <!-- Native Audio Element — Streaming FIFA World Cup Anthem DNA (More Than A Game) -->
     <audio id="bgAudio" loop preload="auto">
-        <source src="https://archive.org/download/acidplanet-audio-00219766/219766-7712-198740.mp3" type="audio/mpeg">
+        <source src="https://archive.org/download/bts-dna_202005/BTS%20-%20DNA.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Floating Audio Toggle Button defaults directly to your layout -->
+    <!-- Floating Audio Toggle Button -->
     <button id="audioToggleBtn" class="audio-toggle-btn">🔊 Music On</button>
 
     <!-- Header -->
@@ -454,7 +454,7 @@
         const audio = document.getElementById('bgAudio');
         const audioToggleBtn = document.getElementById('audioToggleBtn');
 
-        // Simple original toggle click logic
+        // Toggle click logic
         audioToggleBtn.addEventListener('click', function() {
             if (audio.paused) {
                 audio.play();
