@@ -25,48 +25,33 @@
             position: relative;
         }
 
-        /* --- Floating Audio Container --- */
-        .audio-container {
+        /* --- Floating Music Player Widget --- */
+        .music-widget {
             position: fixed;
             top: 25px;
             right: 130px; 
             z-index: 100;
+            background: #FFF0F2;
+            padding: 10px;
+            border-radius: 16px;
+            box-shadow: 0 6px 16px rgba(208, 106, 128, 0.15);
+            border: 2px solid #FFD1DC;
             display: flex;
             flex-direction: column;
-            align-items: flex-end;
-            gap: 5px;
-        }
-
-        .audio-toggle-btn {
-            background: #FFF0F2;
-            padding: 10px 16px;
-            border-radius: 20px;
-            text-decoration: none;
-            color: #D06A80;
-            font-weight: 700;
-            font-size: 0.85rem;
-            box-shadow: 0 6px 16px rgba(208, 106, 128, 0.15);
-            transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
-            border: 2px solid #FFD1DC;
-            cursor: pointer;
-            display: inline-flex;
             align-items: center;
             gap: 6px;
+            width: 200px;
         }
 
-        .audio-toggle-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 22px rgba(208, 106, 128, 0.25);
-            background-color: #FFE3E8;
-        }
-
-        .audio-status-note {
-            font-size: 0.7rem;
-            color: #BA556A;
-            background: rgba(255, 255, 255, 0.8);
-            padding: 2px 8px;
-            border-radius: 10px;
-            display: none;
+        .music-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #D06A80;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
         }
 
         /* --- Instagram Badge --- */
@@ -352,7 +337,7 @@
 
         @media (max-width: 600px) {
             header {
-                padding-top: 130px;
+                padding-top: 170px;
             }
             .ig-top-badge {
                 top: 20px;
@@ -362,9 +347,10 @@
             .ig-top-badge:hover {
                 transform: translateX(50%) translateY(-3px);
             }
-            .audio-container {
+            .music-widget {
                 top: 20px;
-                right: 20px;
+                left: 50%;
+                transform: translateX(-50%);
                 position: absolute;
             }
         }
@@ -372,15 +358,10 @@
 </head>
 <body>
 
-    <!-- Native Audio Element — Pointed to a public preview mirror stream -->
-    <audio id="bgAudio" loop preload="auto">
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-    </audio>
-
-    <!-- Floating Audio Toggle Button Container -->
-    <div class="audio-container">
-        <button id="audioToggleBtn" class="audio-toggle-btn">🔊 Play DNA Anthem</button>
-        <span id="audioErrorMsg" class="audio-status-note">⚠️ Blocked by Browser. See code notes to fix!</span>
+    <!-- Embedded Video Player for Ed Sheeran - Supermarket Flowers -->
+    <div class="music-widget">
+        <div class="music-title">🎵 Ed Sheeran - Supermarket Flowers</div>
+        <iframe width="180" height="40" src="https://www.youtube.com/embed/bIB8EWqC050?controls=1" title="Supermarket Flowers" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
 
     <!-- Header -->
@@ -470,25 +451,6 @@
 
     <script>
         const form = document.getElementById('bookingForm');
-        const audio = document.getElementById('bgAudio');
-        const audioToggleBtn = document.getElementById('audioToggleBtn');
-        const audioErrorMsg = document.getElementById('audioErrorMsg');
-
-        // Toggle play logic with catch block for browser security restrictions
-        audioToggleBtn.addEventListener('click', function() {
-            if (audio.paused) {
-                audio.play().then(() => {
-                    audioToggleBtn.innerHTML = "🔊 Music On";
-                    audioErrorMsg.style.display = "none";
-                }).catch((error) => {
-                    console.log("Audio play blocked:", error);
-                    audioErrorMsg.style.display = "block";
-                });
-            } else {
-                audio.pause();
-                audioToggleBtn.innerHTML = "🔇 Music Off";
-            }
-        });
 
         // Booking Form Handling
         form.addEventListener('submit', function(event) {
