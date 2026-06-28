@@ -25,11 +25,19 @@
             position: relative;
         }
 
-        /* --- Floating Audio Toggle Button --- */
-        .audio-toggle-btn {
+        /* --- Floating Audio Container --- */
+        .audio-container {
             position: fixed;
             top: 25px;
             right: 130px; 
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 5px;
+        }
+
+        .audio-toggle-btn {
             background: #FFF0F2;
             padding: 10px 16px;
             border-radius: 20px;
@@ -41,7 +49,6 @@
             transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
             border: 2px solid #FFD1DC;
             cursor: pointer;
-            z-index: 100;
             display: inline-flex;
             align-items: center;
             gap: 6px;
@@ -51,6 +58,15 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 22px rgba(208, 106, 128, 0.25);
             background-color: #FFE3E8;
+        }
+
+        .audio-status-note {
+            font-size: 0.7rem;
+            color: #BA556A;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 2px 8px;
+            border-radius: 10px;
+            display: none;
         }
 
         /* --- Instagram Badge --- */
@@ -346,7 +362,7 @@
             .ig-top-badge:hover {
                 transform: translateX(50%) translateY(-3px);
             }
-            .audio-toggle-btn {
+            .audio-container {
                 top: 20px;
                 right: 20px;
                 position: absolute;
@@ -356,13 +372,16 @@
 </head>
 <body>
 
-    <!-- Native Audio Element — Streaming FIFA World Cup Anthem DNA (More Than A Game) -->
+    <!-- Native Audio Element — Pointed to a public preview mirror stream -->
     <audio id="bgAudio" loop preload="auto">
-        <source src="https://archive.org/download/bts-dna_202005/BTS%20-%20DNA.mp3" type="audio/mpeg">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Floating Audio Toggle Button -->
-    <button id="audioToggleBtn" class="audio-toggle-btn">🔊 Music On</button>
+    <!-- Floating Audio Toggle Button Container -->
+    <div class="audio-container">
+        <button id="audioToggleBtn" class="audio-toggle-btn">🔊 Play DNA Anthem</button>
+        <span id="audioErrorMsg" class="audio-status-note">⚠️ Blocked by Browser. See code notes to fix!</span>
+    </div>
 
     <!-- Header -->
     <header>
@@ -453,12 +472,18 @@
         const form = document.getElementById('bookingForm');
         const audio = document.getElementById('bgAudio');
         const audioToggleBtn = document.getElementById('audioToggleBtn');
+        const audioErrorMsg = document.getElementById('audioErrorMsg');
 
-        // Toggle click logic
+        // Toggle play logic with catch block for browser security restrictions
         audioToggleBtn.addEventListener('click', function() {
             if (audio.paused) {
-                audio.play();
-                audioToggleBtn.innerHTML = "🔊 Music On";
+                audio.play().then(() => {
+                    audioToggleBtn.innerHTML = "🔊 Music On";
+                    audioErrorMsg.style.display = "none";
+                }).catch((error) => {
+                    console.log("Audio play blocked:", error);
+                    audioErrorMsg.style.display = "block";
+                });
             } else {
                 audio.pause();
                 audioToggleBtn.innerHTML = "🔇 Music Off";
