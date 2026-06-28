@@ -7,34 +7,25 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-        body { background-color: #FFF5F6; color: #4A4A4A; }
-
-        /* --- Music Button (Top Right) --- */
-        .music-nav {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-        }
-        #playMusicBtn {
-            background: #FFD1DC;
-            border: 2px solid #D06A80;
-            color: #D06A80;
-            padding: 10px 15px;
-            border-radius: 20px;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        body { background-color: #FFF5F6; color: #4A4A4A; line-height: 1.6; }
+        
+        /* Music Button - Top Right */
+        .music-nav { position: fixed; top: 20px; right: 20px; z-index: 9999; }
+        #playMusicBtn { 
+            background: #FFD1DC; border: 2px solid #D06A80; color: #D06A80; 
+            padding: 10px 15px; border-radius: 20px; font-weight: 700; 
+            cursor: pointer; display: flex; align-items: center; gap: 8px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-        #playMusicBtn:hover { background: #E8B5C0; }
 
-        /* ... (Keep all your other existing CSS here) ... */
-        header { background-color: #FFD1DC; text-align: center; padding: 70px 20px; }
-        .booking-container { background: #FFFFFF; border-radius: 24px; padding: 40px; max-width: 600px; margin: 20px auto; }
-        .submit-btn { width: 100%; background-color: #F0C4CE; border: none; padding: 15px; border-radius: 30px; font-weight: 600; cursor: pointer; }
+        /* Standard Styles */
+        header { background-color: #FFD1DC; text-align: center; padding: 60px 20px; }
+        .container { max-width: 600px; margin: 20px auto; padding: 20px; }
+        .dog-card { background: white; padding: 20px; border-radius: 20px; margin-bottom: 20px; text-align: center; }
+        .dog-img { width: 100%; border-radius: 15px; }
+        .form-group { margin-bottom: 15px; }
+        input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; }
+        .submit-btn { width: 100%; background-color: #D06A80; color: white; border: none; padding: 15px; border-radius: 20px; cursor: pointer; font-weight: 700; }
     </style>
 </head>
 <body>
@@ -42,24 +33,38 @@
     <div class="music-nav">
         <button id="playMusicBtn">🎵 Play Music</button>
     </div>
-    <audio id="audioElement" loop>
+    <audio id="bgMusic" loop>
         <source src="https://archive.org/download/Weezer_2021-09-03/14%20Island%20In%20The%20Sun.mp3" type="audio/mpeg">
     </audio>
 
     <header>
-        <h1>🐶 Momo Dog Sitting</h1>
+        <h1>Momo Dog Sitting</h1>
     </header>
 
-    <main class="booking-container">
+    <div class="container">
+        <div class="dog-card">
+            <img class="dog-img" src="http://googleusercontent.com/image_collection/image_retrieval/12493479314270708564_0" alt="Mocha">
+            <h3>Mocha</h3>
+        </div>
+        <div class="dog-card">
+            <img class="dog-img" src="http://googleusercontent.com/image_collection/image_retrieval/15790814534616261491_0" alt="Toto">
+            <h3>Toto</h3>
+        </div>
+
         <form id="bookingForm">
+            <div class="form-group"><input type="text" id="name" placeholder="Your Name" required></div>
+            <div class="form-group"><input type="text" id="puppy" placeholder="Puppy's Name" required></div>
+            <div class="form-group"><input type="date" id="date" required></div>
+            <div class="form-group"><textarea id="notes" placeholder="Special Notes"></textarea></div>
             <button type="submit" class="submit-btn">Email me these booking details ✉️</button>
         </form>
-    </main>
+    </div>
 
     <script>
         const btn = document.getElementById('playMusicBtn');
-        const audio = document.getElementById('audioElement');
+        const audio = document.getElementById('bgMusic');
 
+        // Toggle Play/Pause
         btn.addEventListener('click', () => {
             if (audio.paused) {
                 audio.play();
@@ -70,10 +75,16 @@
             }
         });
 
-        // Booking form email logic
-        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+        // Form Email Action
+        document.getElementById('bookingForm').addEventListener('submit', (e) => {
             e.preventDefault();
-            window.location.href = "mailto:grace.de.kim@gmail.com?subject=Booking Request&body=Details go here...";
+            const name = document.getElementById('name').value;
+            const puppy = document.getElementById('puppy').value;
+            const date = document.getElementById('date').value;
+            const notes = document.getElementById('notes').value;
+
+            const mailto = `mailto:grace.de.kim@gmail.com?subject=Booking Request&body=Name: ${name}%0APuppy: ${puppy}%0ADate: ${date}%0ANotes: ${notes}`;
+            window.location.href = mailto;
         });
     </script>
 </body>
