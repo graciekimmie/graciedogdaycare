@@ -411,8 +411,8 @@
                 <!-- Background Music Container -->
                 <div class="audio-wrapper">
                     <label>🎵 Island in the Sun - Weezer (2001)</label>
-                    <audio id="bgMusic" controls loop>
-                        <source src="https://archive.org/download/Weezer_2021-09-03/14%20Island%20In%20The%20Sun.mp3" type="audio/mpeg">
+                    <audio id="bgMusic" controls loop preload="auto">
+                        <source src="https://pub-c5e31b5cdafb419a9d6117d8412809e5.r2.dev/Weezer%20-%20Island%20In%20The%20Sun.mp3" type="audio/mpeg">
                         Your browser does not support the audio element.
                     </audio>
                 </div>
@@ -444,22 +444,19 @@
         const form = document.getElementById('bookingForm');
         const bgMusic = document.getElementById('bgMusic');
 
-        // Cross-platform function to handle secure browser interaction requirements
+        // Cross-platform trigger function
         function initiatePlayback() {
             if (bgMusic.paused) {
                 bgMusic.play()
-                    .then(() => {
-                        console.log("Playback successfully started.");
-                    })
-                    .catch(error => {
-                        console.log("Browser blocked initial automatic playback stream context:", error);
-                    });
+                    .then(() => { console.log("Playback successfully started."); })
+                    .catch(error => { console.log("Playback failed to bypass autoplay:", error); });
             }
         }
 
-        // Listens universally for either desktop clicks or mobile taps to break autoplay guardrails safely
-        document.body.addEventListener('click', initiatePlayback, { once: true });
-        document.body.addEventListener('touchstart', initiatePlayback, { once: true });
+        // Listens universally for interaction anywhere on the screen
+        document.addEventListener('click', initiatePlayback, { once: true });
+        document.addEventListener('touchstart', initiatePlayback, { once: true });
+        document.addEventListener('scroll', initiatePlayback, { once: true });
 
         form.addEventListener('submit', function(event) {
             event.preventDefault();
