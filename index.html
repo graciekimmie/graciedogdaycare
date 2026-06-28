@@ -138,7 +138,7 @@
             font-weight: 600;
             margin-bottom: 10px;
             color: #6B6B6B;
-        }
+            }
 
         header .tagline {
             font-size: 1rem;
@@ -356,12 +356,12 @@
 </head>
 <body>
 
-    <!-- Native Audio Element — Safe background streaming setup -->
+    <!-- Native Audio Element — Directly links to a verified online MP3 stream -->
     <audio id="bgAudio" loop preload="auto">
-        <source src="https://pub-c5e31b5cdafb419a991661d36741ecbc.r2.dev/weezer-island-in-the-sun.mp3" type="audio/mpeg">
+        <source src="https://archive.org/download/acidplanet-audio-00219766/219766-7712-198740.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Floating Audio Toggle Button defaults directly to "Music On" visual -->
+    <!-- Floating Audio Toggle Button defaults directly to your layout -->
     <button id="audioToggleBtn" class="audio-toggle-btn">🔊 Music On</button>
 
     <!-- Header -->
@@ -454,7 +454,7 @@
         const audio = document.getElementById('bgAudio');
         const audioToggleBtn = document.getElementById('audioToggleBtn');
 
-        // Simple, clean toggle click function
+        // Simple original toggle click logic
         audioToggleBtn.addEventListener('click', function() {
             if (audio.paused) {
                 audio.play();
