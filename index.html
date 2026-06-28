@@ -293,26 +293,41 @@
             letter-spacing: 0.5px;
         }
 
-        /* --- Audio Player Layout Customizations --- */
+        /* --- Custom Background Music Player (YouTube Powered) --- */
         .audio-wrapper {
             margin-top: 20px;
             text-align: center;
             background: #FAFAFA;
             border: 1px dashed #FFD1DC;
-            padding: 12px;
+            padding: 15px;
             border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
         .audio-wrapper label {
             font-size: 0.85rem;
             color: #6B6B6B;
             font-weight: 600;
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
-        audio {
+        .youtube-audio-container {
+            width: 200px;
+            height: 40px;
+            overflow: hidden;
+            position: relative;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        /* Positions the YouTube controls perfectly inside our tiny design frame */
+        .youtube-audio-container iframe {
+            position: absolute;
+            top: -50px;
+            left: 0;
             width: 100%;
-            max-width: 280px;
-            height: 36px;
+            height: 140px;
         }
 
         footer {
@@ -408,13 +423,12 @@
 
                 <button type="submit" id="submitBtn" class="submit-btn">Email me these booking details ✉️</button>
                 
-                <!-- Background Music Container -->
+                <!-- Universal YouTube Background Audio Embed -->
                 <div class="audio-wrapper">
                     <label>🎵 Island in the Sun - Weezer (2001)</label>
-                    <audio id="bgMusic" controls loop preload="auto">
-                        <source src="https://pub-c5e31b5cdafb419a9d6117d8412809e5.r2.dev/Weezer%20-%20Island%20In%20The%20Sun.mp3" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>
+                    <div class="youtube-audio-container">
+                        <iframe id="ytPlayer" src="https://www.youtube.com/embed/3ePVGpy4cNo?enablejsapi=1&loop=1&playlist=3ePVGpy4cNo" allow="autoplay"></iframe>
+                    </div>
                 </div>
             </form>
         </section>
@@ -440,35 +454,39 @@
         <p><a href="#" id="footerEmailBtn">grace.de.kim@gmail.com</a></p>
     </footer>
 
+    <!-- Loads YouTube API Framework securely -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+
     <script>
         const form = document.getElementById('bookingForm');
-        const bgMusic = document.getElementById('bgMusic');
+        let player;
 
-        // Cross-platform trigger function
-        function initiatePlayback() {
-            if (bgMusic.paused) {
-                bgMusic.play()
-                    .then(() => { console.log("Playback successfully started."); })
-                    .catch(error => { console.log("Playback failed to bypass autoplay:", error); });
+        // Triggers automatically once the official YouTube API Framework completes loading
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('ytPlayer');
+        }
+
+        // Fires the music playback across mobile & desktop as soon as the user touches/interacts with the window
+        function triggerAudio() {
+            if (player && typeof player.playVideo === 'function') {
+                player.playVideo();
             }
         }
 
-        // Listens universally for interaction anywhere on the screen
-        document.addEventListener('click', initiatePlayback, { once: true });
-        document.addEventListener('touchstart', initiatePlayback, { once: true });
-        document.addEventListener('scroll', initiatePlayback, { once: true });
+        // Listens universally for interaction anywhere on the viewport layout
+        document.addEventListener('click', triggerAudio, { once: true });
+        document.addEventListener('touchstart', triggerAudio, { once: true });
+        document.addEventListener('scroll', triggerAudio, { once: true });
 
         form.addEventListener('submit', function(event) {
             event.preventDefault();
 
-            // Pull values from form elements
             const clientName = document.getElementById('name').value;
             const puppyName = document.getElementById('puppy-name').value;
             const checkIn = document.getElementById('check-in').value;
             const checkOut = document.getElementById('check-out').value;
             const specialNotes = document.getElementById('notes').value || "None";
 
-            // Format standard text parameters
             const subject = `Momo Dog Sitting Booking Request - ${puppyName}`;
             const body = `Hi Grace,\n\nI'd love to request a booking for my pup! Here are the details:\n\n` +
                          `• Client Name: ${clientName}\n` +
@@ -478,7 +496,6 @@
                          `Special Notes:\n${specialNotes}\n\n` +
                          `Looking forward to hearing from you!`;
 
-            // Uses native mailto to bypass web login checks and route straight into the device's logged-in email client/app
             const mailtoUrl = "mailto:grace.de.kim@gmail.com" +
                              "?subject=" + encodeURIComponent(subject) +
                              "&body=" + encodeURIComponent(body);
@@ -486,7 +503,6 @@
             window.location.href = mailtoUrl;
         });
 
-        // Universal footer fallback
         document.getElementById('footerEmailBtn').addEventListener('click', function(e) {
             e.preventDefault();
             window.location.href = "mailto:grace.de.kim@gmail.com";
