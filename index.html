@@ -138,7 +138,6 @@
             font-weight: 600;
             margin-bottom: 10px;
             color: #6B6B6B;
-            padding: 0 10px;
         }
 
         header .tagline {
@@ -357,13 +356,13 @@
 </head>
 <body>
 
-    <!-- Native Audio Element — Streaming directly from verified public media stream -->
+    <!-- Native Audio Element — Safe background streaming setup -->
     <audio id="bgAudio" loop preload="auto">
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        <source src="https://pub-c5e31b5cdafb419a991661d36741ecbc.r2.dev/weezer-island-in-the-sun.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Floating Audio Toggle Button -->
-    <button id="audioToggleBtn" class="audio-toggle-btn">Play Music 🎵</button>
+    <!-- Floating Audio Toggle Button defaults directly to "Music On" visual -->
+    <button id="audioToggleBtn" class="audio-toggle-btn">🔊 Music On</button>
 
     <!-- Header -->
     <header>
@@ -455,29 +454,18 @@
         const audio = document.getElementById('bgAudio');
         const audioToggleBtn = document.getElementById('audioToggleBtn');
 
-        // Robust audio activation logic
-        audioToggleBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-
+        // Simple, clean toggle click function
+        audioToggleBtn.addEventListener('click', function() {
             if (audio.paused) {
-                // Trigger play immediately inside the user touch context window
-                var playPromise = audio.play();
-                
-                if (playPromise !== undefined) {
-                    playPromise.then(() => {
-                        audioToggleBtn.innerHTML = "🔊 Music On";
-                    }).catch(err => {
-                        console.error("Audio playback error:", err);
-                    });
-                }
+                audio.play();
+                audioToggleBtn.innerHTML = "🔊 Music On";
             } else {
                 audio.pause();
                 audioToggleBtn.innerHTML = "🔇 Music Off";
             }
         });
 
-        // Form fields handling
+        // Booking Form Handling
         form.addEventListener('submit', function(event) {
             event.preventDefault();
 
