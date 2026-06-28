@@ -29,7 +29,7 @@
         .audio-toggle-btn {
             position: fixed;
             top: 25px;
-            right: 130px; /* Aligns neatly right next to your Instagram badge */
+            right: 130px; 
             background: #FFF0F2;
             padding: 10px 16px;
             border-radius: 20px;
@@ -357,12 +357,15 @@
 </head>
 <body>
 
+    <!-- Native Audio Element — Streaming directly from verified public media stream -->
     <audio id="bgAudio" loop preload="auto">
-        <source src="https://archive.org/download/weezer-island-in-the-sun/Weezer%20-%20Island%20In%20The%20Sun.mp3" type="audio/mpeg">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
     </audio>
 
+    <!-- Floating Audio Toggle Button -->
     <button id="audioToggleBtn" class="audio-toggle-btn">Play Music 🎵</button>
 
+    <!-- Header -->
     <header>
         <a href="instagram://user?username=Gracie.kimmie" id="igBtn" target="_blank" class="ig-top-badge">
             <div class="puppy-head-container">
@@ -378,6 +381,7 @@
     </header>
 
     <main>
+        <!-- VIP Puppies Section -->
         <h2 class="section-title">✨ VIP Puppies ✨</h2>
         <section class="puppy-grid">
             <div class="puppy-card">
@@ -392,6 +396,7 @@
             </div>
         </section>
 
+        <!-- Booking Request Form Section -->
         <h2 class="section-title">📅 Booking Request</h2>
         <section class="booking-container">
             <form id="bookingForm">
@@ -424,6 +429,7 @@
             </form>
         </section>
 
+        <!-- Pricing & Rates Section -->
         <h2 class="section-title">💰 Pricing & Rates</h2>
         <section class="info-container">
             <ul class="price-list">
@@ -449,23 +455,29 @@
         const audio = document.getElementById('bgAudio');
         const audioToggleBtn = document.getElementById('audioToggleBtn');
 
-        // Clean, explicit event toggle listener
+        // Robust audio activation logic
         audioToggleBtn.addEventListener('click', function(e) {
+            e.preventDefault();
             e.stopPropagation();
 
             if (audio.paused) {
-                audio.play().then(() => {
-                    audioToggleBtn.innerHTML = "🔊 Music On";
-                }).catch(err => {
-                    console.log("Audio play request failed:", err);
-                });
+                // Trigger play immediately inside the user touch context window
+                var playPromise = audio.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        audioToggleBtn.innerHTML = "🔊 Music On";
+                    }).catch(err => {
+                        console.error("Audio playback error:", err);
+                    });
+                }
             } else {
                 audio.pause();
                 audioToggleBtn.innerHTML = "🔇 Music Off";
             }
         });
 
-        // Form submission routine
+        // Form fields handling
         form.addEventListener('submit', function(event) {
             event.preventDefault();
 
