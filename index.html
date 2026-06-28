@@ -16,16 +16,29 @@
         body {
             background-color: #FFF5F6;
             color: #4A4A4A;
+            line-height: 1.6;
         }
 
         header {
             background-color: #FFD1DC;
             text-align: center;
-            padding: 70px 20px 60px 20px;
+            padding: 100px 20px 80px 20px;
             position: relative;
         }
 
-        /* --- Custom Music Button Widget --- */
+        h1 {
+            color: #D06A80;
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #6B5B5E;
+            font-weight: 400;
+        }
+
+        /* --- Custom Music Button --- */
         .music-widget {
             position: fixed;
             top: 25px;
@@ -88,28 +101,71 @@
             box-shadow: 0 8px 22px rgba(208, 106, 128, 0.25);
             background: #FFE3E8;
         }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .section {
+            background: #FFFFFF;
+            padding: 40px;
+            border-radius: 24px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(208, 106, 128, 0.05);
+            border: 1px solid rgba(255, 209, 220, 0.5);
+        }
+
+        .section h2 {
+            color: #D06A80;
+            margin-bottom: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #A39295;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            header { padding-top: 140px; }
+            .music-widget { top: 20px; right: auto; left: 20px; }
+            .ig-top-badge { top: 20px; right: 20px; width: 70px; height: 70px; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- Native Audio Source Link -->
-    <audio id="bg-music" loop src="https://archive.org/download/weezer-2010-01-20-liveintallahassee/Island%20in%20the%20Sun.mp3"></audio>
+    <!-- Native Audio Element targeting your local MP3 file -->
+    <audio id="bg-music" loop src="island.mp3"></audio>
 
-    <!-- Top Right Native Button Widget -->
     <div class="music-widget">
         <button class="music-btn" id="musicBtn">
             🎵 <span>PLAY MUSIC</span>
         </button>
     </div>
 
-    <a href="https://instagram.com" target="_blank" class="ig-top-badge" aria-label="Instagram Profile">
+    <a href="https://instagram.com" target="_blank" class="ig-top-badge">
         <span style="font-size: 0.75rem; font-weight: bold;">Instagram</span>
     </a>
 
     <header>
-        <h1 style="color: #D06A80; font-size: 2.5rem; margin-bottom: 10px;">Momo Dog Sitting</h1>
-        <p>Loving care when you're not there 🐾</p>
+        <h1>Momo Dog Sitting</h1>
+        <p class="subtitle">Loving care when you're not there 🐾</p>
     </header>
+
+    <div class="container">
+        <section class="section">
+            <h2>Welcome to Momo's!</h2>
+            <p>Your page is officially rebuilt and ready to go! To get your custom background music playing seamlessly without any risks of breaking the site layouts, follow the quick 2-step setup below.</p>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Momo Dog Sitting.</p>
+    </footer>
 
     <script>
         const musicBtn = document.getElementById('musicBtn');
@@ -122,8 +178,8 @@
                     musicBtn.classList.add('playing');
                     btnText.textContent = 'PAUSE MUSIC';
                 }).catch(err => {
-                    alert("Audio failed to stream. You can also replace line 73 with your own local MP3 filename!");
-                    console.error("Playback failed:", err);
+                    alert("To hear 'Island in the Sun', make sure an MP3 file named 'island.mp3' is saved directly inside your website's folder!");
+                    console.error("Playback blocked or file missing:", err);
                 });
             } else {
                 bgMusic.pause();
