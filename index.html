@@ -4,110 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Momo Dog Sitting</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-        body { background-color: #FFF5F6; color: #4A4A4A; line-height: 1.6; }
-        header { background-color: #FFD1DC; text-align: center; padding: 100px 20px 80px 20px; position: relative; }
-        h1 { color: #D06A80; font-size: 3rem; margin-bottom: 10px; }
-        .subtitle { font-size: 1.2rem; color: #6B5B5E; font-weight: 400; }
-
-        /* --- Music Button --- */
-        .music-widget { position: fixed; top: 25px; right: 150px; z-index: 100; }
-        .music-btn { background: #FFF0F2; color: #D06A80; border: 2px solid #FFD1DC; padding: 10px 20px; border-radius: 20px; font-weight: 700; cursor: pointer; box-shadow: 0 6px 16px rgba(208, 106, 128, 0.15); transition: all 0.2s; }
-        .music-btn.playing { background-color: #D06A80; color: #FFFFFF; }
-
-        /* --- Instagram Badge --- */
-        .ig-top-badge { position: absolute; top: 25px; right: 25px; background: #FFF0F2; width: 110px; height: 85px; border-radius: 18px; text-decoration: none; color: #D06A80; border: 2px solid #FFD1DC; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10; transition: transform 0.2s; }
-        .ig-top-badge:hover { transform: translateY(-3px); background: #FFE3E8; }
-
-        /* --- Content Layout --- */
-        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
-        .section { background: #FFFFFF; padding: 40px; border-radius: 24px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(208, 106, 128, 0.05); border: 1px solid rgba(255, 209, 220, 0.5); }
-        .section h2 { color: #D06A80; margin-bottom: 20px; }
-        
-        /* --- Photos --- */
-        .dog-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
-        .dog-card { background: #FFF5F6; border-radius: 20px; overflow: hidden; border: 1px solid #FFD1DC; text-align: center; padding-bottom: 20px; }
-        .dog-img { width: 100%; height: 250px; object-fit: cover; }
-
-        /* --- Forms & Buttons --- */
-        .btn-container { display: flex; gap: 15px; margin-top: 10px; }
-        .submit-btn, .email-link-btn { flex: 1; background-color: #D06A80; color: #FFFFFF; border: none; padding: 14px; border-radius: 12px; font-weight: 700; text-align: center; text-decoration: none; cursor: pointer; }
-        
-        /* --- Venmo --- */
-        .venmo-box { background: #EBF4FF; border: 2px dashed #008CFF; padding: 25px; border-radius: 16px; text-align: center; margin-top: 15px; }
-        .venmo-handle { background: #FFFFFF; display: inline-block; padding: 6px 16px; border-radius: 20px; font-weight: 700; color: #4A4A4A; }
+        body { font-family: sans-serif; background-color: #FFF5F6; color: #4A4A4A; padding: 20px; }
+        .container { max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 20px; }
+        .music-btn { background: #FFD1DC; border: none; padding: 10px; border-radius: 10px; cursor: pointer; }
+        .dog-card { border: 1px solid #eee; padding: 15px; margin: 10px 0; border-radius: 15px; text-align: center; }
+        .dog-img { width: 100%; border-radius: 15px; }
+        input, textarea { width: 100%; margin: 10px 0; padding: 10px; border: 1px solid #ddd; border-radius: 10px; }
+        .email-btn { background: #E9B2BF; color: white; border: none; padding: 15px; border-radius: 20px; width: 100%; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <audio id="bg-music" loop src="island.mp3"></audio>
-
-    <div class="music-widget">
-        <button class="music-btn" id="musicBtn">🎵 <span>PLAY MUSIC</span></button>
-    </div>
-
-    <!-- UPDATE THESE LINKS -->
-    <a href="https://instagram.com/yourhandle" target="_blank" class="ig-top-badge">
-        <span style="font-size: 0.65rem; font-weight: 700;">@YourHandle</span>
-    </a>
-
-    <header>
-        <h1>Momo Dog Sitting</h1>
-        <p class="subtitle">Loving care when you're not there 🐾</p>
-    </header>
+    <audio id="audioPlayer" src="island_in_the_sun.mp3"></audio>
+    <button class="music-btn" onclick="toggleMusic()" id="musicBtn">Play MUSIC</button>
 
     <div class="container">
-        <section class="section">
-            <h2>Meet The Pups</h2>
-            <div class="dog-gallery">
-                <div class="dog-card">
-                    <img class="dog-img" src="https://images.unsplash.com/photo-1552053831-7159492768d1?w=500" alt="Mocha">
-                    <h3>Mocha</h3>
-                </div>
-                <div class="dog-card">
-                    <img class="dog-img" src="https://images.unsplash.com/photo-1517849845537-4d257902454a?w=500" alt="Toto">
-                    <h3>Toto</h3>
-                </div>
-            </div>
-        </section>
+        <h1>Momo Dog Sitting</h1>
+        
+        <!-- Dog Gallery -->
+        <div class="dog-card">
+            <img src="IMG_6146.jpg" alt="Mocha" class="dog-img">
+            <h3>Mocha</h3>
+        </div>
+        <div class="dog-card">
+            <img src="IMG_6145.jpg" alt="Toto" class="dog-img">
+            <h3>Toto</h3>
+        </div>
 
-        <section class="section">
-            <h2>Book a Stay</h2>
-            <form id="bookingForm">
-                <input type="text" placeholder="Your Name" style="width:100%; margin-bottom:10px; padding:12px; border:2px solid #FFD1DC; border-radius:12px;">
-                <textarea rows="4" placeholder="Special Instructions..." style="width:100%; margin-bottom:10px; padding:12px; border:2px solid #FFD1DC; border-radius:12px;"></textarea>
-                <div class="btn-container">
-                    <button type="submit" class="submit-btn">Submit Booking</button>
-                    <a href="mailto:email@example.com" class="email-link-btn">Email Me</a>
-                </div>
-            </form>
-        </section>
-
-        <section class="section">
-            <h2>Payments</h2>
-            <div class="venmo-box">
-                <p>Venmo Payment</p>
-                <div class="venmo-handle">@Momo-DogSitting</div>
-            </div>
-        </section>
+        <!-- Booking Request -->
+        <h2>📅 Booking Request</h2>
+        <form id="bookingForm">
+            <input type="text" id="name" placeholder="Your Name" required>
+            <input type="text" id="puppyName" placeholder="Puppy's Name" required>
+            <input type="date" id="checkIn" placeholder="Check-In Date" required>
+            <input type="date" id="checkOut" placeholder="Check-Out Date" required>
+            <textarea id="notes" placeholder="Special Notes"></textarea>
+            
+            <button type="button" class="email-btn" onclick="sendEmail()">
+                Email me these booking details ✉️
+            </button>
+        </form>
     </div>
 
     <script>
-        const musicBtn = document.getElementById('musicBtn');
-        const bgMusic = document.getElementById('bg-music');
-        musicBtn.addEventListener('click', () => {
-            if (bgMusic.paused) {
-                bgMusic.play();
-                musicBtn.classList.add('playing');
-                musicBtn.querySelector('span').textContent = 'PAUSE MUSIC';
+        function toggleMusic() {
+            const audio = document.getElementById('audioPlayer');
+            const btn = document.getElementById('musicBtn');
+            if (audio.paused) {
+                audio.play();
+                btn.innerText = "Pause MUSIC";
             } else {
-                bgMusic.pause();
-                musicBtn.classList.remove('playing');
-                musicBtn.querySelector('span').textContent = 'PLAY MUSIC';
+                audio.pause();
+                btn.innerText = "Play MUSIC";
             }
-        });
+        }
+
+        function sendEmail() {
+            const name = document.getElementById('name').value;
+            const puppy = document.getElementById('puppyName').value;
+            const checkIn = document.getElementById('checkIn').value;
+            const checkOut = document.getElementById('checkOut').value;
+            const notes = document.getElementById('notes').value;
+
+            const body = `Name: ${name}%0APuppy: ${puppy}%0ACheck-In: ${checkIn}%0ACheck-Out: ${checkOut}%0ANotes: ${notes}`;
+            window.location.href = `mailto:grace.de.kim@gmail.com?subject=Booking Request&body=${body}`;
+        }
     </script>
 </body>
 </html>
