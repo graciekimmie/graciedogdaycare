@@ -25,11 +25,11 @@
             position: relative;
         }
 
-        /* --- Cute Floating Audio Controller Button --- */
+        /* --- Floating Audio Toggle Button --- */
         .audio-toggle-btn {
             position: fixed;
             top: 25px;
-            right: 130px; /* Sits perfectly next to your Instagram badge */
+            right: 130px; /* Aligns neatly right next to your Instagram badge */
             background: #FFF0F2;
             padding: 10px 16px;
             border-radius: 20px;
@@ -53,7 +53,7 @@
             background-color: #FFE3E8;
         }
 
-        /* --- Cute Rounded Square Instagram Badge --- */
+        /* --- Instagram Badge --- */
         .ig-top-badge {
             position: absolute;
             top: 25px;
@@ -86,7 +86,6 @@
             margin-bottom: 6px;
         }
 
-        /* Mocha & Toto Coat Profile Color */
         .puppy-icon {
             width: 22px;
             height: 16px;
@@ -321,17 +320,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* --- Fully Invisible Audio Node Sandboxing --- */
-        .secure-audio-sandbox {
-            position: fixed;
-            width: 1px;
-            height: 1px;
-            bottom: -100px;
-            left: -100px;
-            opacity: 0;
-            pointer-events: none;
-        }
-
         footer {
             text-align: center;
             padding: 40px 20px;
@@ -367,6 +355,11 @@
     </style>
 </head>
 <body>
+
+    <!-- Native Invisible Audio Element -->
+    <audio id="bgAudio" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
 
     <!-- Floating Audio Button -->
     <button id="audioToggleBtn" class="audio-toggle-btn">🔇 Music Off</button>
@@ -450,105 +443,64 @@
         </section>
     </main>
 
-    <!-- Sandboxed YouTube Iframe node -->
-    <div class="secure-audio-sandbox">
-        <div id="ytPlayer"></div>
-    </div>
-
     <footer>
         <p>🐾 Made with love for happy puppies in Bellevue 💕</p>
         <p><strong>For all booking inquiries, please contact here:</strong></p>
         <p><a href="#" id="footerEmailBtn">grace.de.kim@gmail.com</a></p>
     </footer>
 
-    <!-- Loads YouTube API Framework securely -->
-    <script src="https://www.youtube.com/iframe_api"></script>
-
     <script>
         const form = document.getElementById('bookingForm');
+        const audio = document.getElementById('bgAudio');
         const audioToggleBtn = document.getElementById('audioToggleBtn');
-        let player;
-        let musicPlaying = false;
         let initialTriggered = false;
 
-        // API initializes player fully out of sight
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('ytPlayer', {
-                height: '1',
-                width: '1',
-                videoId: '3ePVGpy4cNo', // Island in the Sun ID
-                playerVars: {
-                    'autoplay': 1,
-                    'loop': 1,
-                    'playlist': '3ePVGpy4cNo',
-                    'controls': 0,
-                    'disablekb': 1
-                },
-                events: {
-                    'onReady': onPlayerReady,
-                    'onStateChange': onPlayerStateChange
-                }
-            });
-        }
-
-        function onPlayerReady(event) {
-            // Player is ready in background
-        }
-
-        function onPlayerStateChange(event) {
-            if (event.data === YT.PlayerState.PLAYING) {
-                musicPlaying = true;
-                audioToggleBtn.innerHTML = "🔊 Music On";
-            } else {
-                musicPlaying = false;
-                audioToggleBtn.innerHTML = "🔇 Music Off";
-            }
-        }
-
-        // Activates the music naturally when user opens up and looks through the page
-        function autoTriggerMusic() {
-            if (!initialTriggered && player && typeof player.playVideo === 'function') {
-                player.playVideo();
-                initialTriggered = true;
-                // Remove listeners once seamless activation completes
-                removeTriggers();
+        // Auto-activates music instantly on the page upon first natural interaction
+        function autoPlayMusic() {
+            if (!initialTriggered) {
+                audio.play().then(() => {
+                    initialTriggered = true;
+                    audioToggleBtn.innerHTML = "🔊 Music On";
+                    removeTriggers();
+                }).catch(err => {
+                    console.log("Autoplay context waiting for a cleaner gesture.");
+                });
             }
         }
 
         function addTriggers() {
-            document.addEventListener('click', autoTriggerMusic, { once: true });
-            document.addEventListener('touchstart', autoTriggerMusic, { once: true });
-            document.addEventListener('scroll', autoTriggerMusic, { once: true });
-            document.addEventListener('mousemove', autoTriggerMusic, { once: true });
+            document.addEventListener('click', autoPlayMusic, { once: true });
+            document.addEventListener('touchstart', autoPlayMusic, { once: true });
+            document.addEventListener('scroll', autoPlayMusic, { once: true });
+            document.addEventListener('mousemove', autoPlayMusic, { once: true });
         }
 
         function removeTriggers() {
-            document.removeEventListener('click', autoTriggerMusic);
-            document.removeEventListener('touchstart', autoTriggerMusic);
-            document.removeEventListener('scroll', autoTriggerMusic);
-            document.removeEventListener('mousemove', autoTriggerMusic);
+            document.removeEventListener('click', autoPlayMusic);
+            document.removeEventListener('touchstart', autoPlayMusic);
+            document.removeEventListener('scroll', autoPlayMusic);
+            document.removeEventListener('mousemove', autoPlayMusic);
         }
 
-        // Initialize user movement tracking instantly
+        // Initialize user interaction loops instantly
         addTriggers();
 
-        // Control toggle button behavior
+        // Dedicated Pause/Play Toggle Button Function
         audioToggleBtn.addEventListener('click', function(e) {
-            e.stopPropagation(); // Stops event bubbling triggers
-            if (!initialTriggered) {
-                initialTriggered = true;
-                removeTriggers();
-                player.playVideo();
-                return;
-            }
-            
-            if (musicPlaying) {
-                player.pauseVideo();
+            e.stopPropagation(); // Stops interaction bubbling
+            initialTriggered = true;
+            removeTriggers();
+
+            if (audio.paused) {
+                audio.play();
+                audioToggleBtn.innerHTML = "🔊 Music On";
             } else {
-                player.playVideo();
+                audio.pause();
+                audioToggleBtn.innerHTML = "🔇 Music Off";
             }
         });
 
+        // Form Submission Logic
         form.addEventListener('submit', function(event) {
             event.preventDefault();
 
