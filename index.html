@@ -293,41 +293,16 @@
             letter-spacing: 0.5px;
         }
 
-        /* --- Custom Background Music Player (YouTube Powered) --- */
-        .audio-wrapper {
-            margin-top: 20px;
-            text-align: center;
-            background: #FAFAFA;
-            border: 1px dashed #FFD1DC;
-            padding: 15px;
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        .audio-wrapper label {
-            font-size: 0.85rem;
-            color: #6B6B6B;
-            font-weight: 600;
-            display: block;
-            margin-bottom: 10px;
-        }
-        .youtube-audio-container {
-            width: 200px;
-            height: 40px;
-            overflow: hidden;
-            position: relative;
-            border-radius: 6px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-        /* Positions the YouTube controls perfectly inside our tiny design frame */
-        .youtube-audio-container iframe {
+        /* --- Seamless Hidden Audio Engine --- */
+        .hidden-audio-container {
             position: absolute;
-            top: -50px;
-            left: 0;
-            width: 100%;
-            height: 140px;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
         }
 
         footer {
@@ -423,12 +398,9 @@
 
                 <button type="submit" id="submitBtn" class="submit-btn">Email me these booking details ✉️</button>
                 
-                <!-- Universal YouTube Background Audio Embed -->
-                <div class="audio-wrapper">
-                    <label>🎵 Island in the Sun - Weezer (2001)</label>
-                    <div class="youtube-audio-container">
-                        <iframe id="ytPlayer" src="https://www.youtube.com/embed/3ePVGpy4cNo?enablejsapi=1&loop=1&playlist=3ePVGpy4cNo" allow="autoplay"></iframe>
-                    </div>
+                <!-- Completely Invisible Background Player -->
+                <div class="hidden-audio-container">
+                    <iframe id="ytPlayer" src="https://www.youtube.com/embed/3ePVGpy4cNo?enablejsapi=1&autoplay=1&loop=1&playlist=3ePVGpy4cNo" allow="autoplay"></iframe>
                 </div>
             </form>
         </section>
@@ -461,22 +433,22 @@
         const form = document.getElementById('bookingForm');
         let player;
 
-        // Triggers automatically once the official YouTube API Framework completes loading
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('ytPlayer');
         }
 
-        // Fires the music playback across mobile & desktop as soon as the user touches/interacts with the window
+        // Seamlessly starts audio on the user's very first scroll, tap, or mouse move
         function triggerAudio() {
             if (player && typeof player.playVideo === 'function') {
                 player.playVideo();
             }
         }
 
-        // Listens universally for interaction anywhere on the viewport layout
+        // Global triggers ensure the page starts singing instantly without needing direct player clicks
         document.addEventListener('click', triggerAudio, { once: true });
         document.addEventListener('touchstart', triggerAudio, { once: true });
         document.addEventListener('scroll', triggerAudio, { once: true });
+        document.addEventListener('mousemove', triggerAudio, { once: true });
 
         form.addEventListener('submit', function(event) {
             event.preventDefault();
