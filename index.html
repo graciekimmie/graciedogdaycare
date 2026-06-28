@@ -29,7 +29,7 @@
         .audio-toggle-btn {
             position: fixed;
             top: 25px;
-            right: 130px; /* Sits beautifully right next to your Instagram badge */
+            right: 130px; 
             background: #FFF0F2;
             padding: 10px 16px;
             border-radius: 20px;
@@ -356,12 +356,12 @@
 </head>
 <body>
 
-    <!-- Native Background Audio Player — Configured for Weezer's Island in the Sun -->
+    <!-- Native Audio Element — Safe background streaming setup -->
     <audio id="bgAudio" loop autoplay muted preload="auto">
-        <source src="https://archive.org/download/weezer-island-in-the-sun/Weezer%20-%20Island%20In%20The%20Sun.mp3" type="audio/mpeg">
+        <source src="https://pub-c5e31b5cdafb419a991661d36741ecbc.r2.dev/weezer-island-in-the-sun.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Floating Audio Toggle Button (Shows On as base value) -->
+    <!-- Floating Audio Toggle Button (Shows "Music On" matching Screenshot 2026-06-27 at 6.18.26 PM.png) -->
     <button id="audioToggleBtn" class="audio-toggle-btn">🔊 Music On</button>
 
     <!-- Header -->
@@ -455,14 +455,14 @@
         const audioToggleBtn = document.getElementById('audioToggleBtn');
         let unmutedInteractively = false;
 
-        // Force browser play sequence on raw initialization 
+        // Triggers initial background play cleanly without crashing loading loops
         window.addEventListener('DOMContentLoaded', () => {
             audio.play().catch(() => {
-                console.log("Autoplay context initializing dynamically via background thread.");
+                console.log("Awaiting quick user event block to unmute master track...");
             });
         });
 
-        // The exact moment a user does ANYTHING, the sound instantly unmutes automatically!
+        // The exact second a visitor does anything (scrolls, touches, moves mouse), it unmutes by default!
         function handleFirstInteraction() {
             if (!unmutedInteractively) {
                 audio.muted = false;
@@ -488,7 +488,7 @@
 
         setupListeners();
 
-        // Control button functions normally to allow user override pauses
+        // Control button allows manual pause override at any point
         audioToggleBtn.addEventListener('click', function(e) {
             e.stopPropagation();
             cleanUpListeners();
@@ -507,7 +507,7 @@
             }
         });
 
-        // Form processing loops
+        // Booking form action loop
         form.addEventListener('submit', function(event) {
             event.preventDefault();
 
