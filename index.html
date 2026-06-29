@@ -10,7 +10,6 @@
         body { background-color: #FFF5F6; color: #4A4A4A; }
         header { background-color: #FFD1DC; text-align: center; padding: 70px 20px 60px 20px; position: relative; }
 
-        /* Music & IG Buttons */
         .header-btn {
             position: absolute;
             top: 25px;
@@ -32,14 +31,6 @@
         #musicToggle { left: 25px; font-size: 0.75rem; font-weight: 700; text-align: center; line-height: 1.2; }
         .ig-top-badge { right: 25px; }
 
-        .puppy-head-container { position: relative; width: 22px; height: 16px; margin-bottom: 6px; }
-        .puppy-icon { width: 22px; height: 16px; background: #C49A82; border-radius: 10px 10px 6px 6px; position: absolute; top: 0; left: 0; }
-        .puppy-icon::before, .puppy-icon::after { content: ''; position: absolute; background: #8B5A42; width: 6px; height: 11px; border-radius: 4px; top: 0; }
-        .puppy-icon::before { left: -4px; transform: rotate(-10deg); }
-        .puppy-icon::after { right: -4px; transform: rotate(10deg); }
-        .puppy-nose { position: absolute; width: 4px; height: 3px; background: #333333; border-radius: 50%; bottom: 3px; left: 9px; z-index: 5; }
-        .ig-handle-text { font-size: 0.9rem; font-weight: 700; line-height: 1.1; text-align: center; }
-
         header h1 { color: #D06A80; font-size: 2.5rem; margin-bottom: 15px; }
         header .subtitle { font-size: 1.2rem; font-weight: 600; margin-bottom: 10px; color: #6B6B6B; }
 
@@ -52,11 +43,8 @@
         .booking-container { background: #FFFFFF; border-radius: 24px; padding: 40px; max-width: 600px; margin: 0 auto 30px auto; box-shadow: 0 10px 25px rgba(0,0,0,0.03); }
         .form-group { margin-bottom: 20px; }
         .form-group label { display: block; font-weight: 600; margin-bottom: 8px; color: #6B6B6B; }
-        .form-group input, .form-group textarea { width: 100%; padding: 12px 15px; border: 1px solid #EAEAEA; border-radius: 10px; background-color: #FAFAFA; }
+        .form-group input { width: 100%; padding: 12px 15px; border: 1px solid #EAEAEA; border-radius: 10px; background-color: #FAFAFA; }
         .submit-btn { width: 100%; background-color: #F0C4CE; border: none; padding: 15px; font-weight: 600; border-radius: 30px; cursor: pointer; }
-        
-        .info-container { background: #FFFFFF; border-radius: 24px; padding: 30px; max-width: 600px; margin: 0 auto 60px auto; text-align: center; }
-        .venmo-link-btn { display: inline-flex; align-items: center; justify-content: center; background: #FFF0F3; border: 2px solid #FFD1DC; border-radius: 20px; padding: 12px 25px; gap: 15px; text-decoration: none; color: #D06A80; font-weight: 700; }
         
         @media (max-width: 600px) {
             header { padding-top: 120px; }
@@ -72,12 +60,8 @@
             <span id="musicText">Play Music</span>
         </div>
 
-        <a href="instagram://user?username=Gracie.kimmie" class="header-btn ig-top-badge">
-            <div class="puppy-head-container">
-                <div class="puppy-icon"></div>
-                <div class="puppy-nose"></div>
-            </div>
-            <div class="ig-handle-text">Gracie.<br>kimmie</div>
+        <a href="https://instagram.com/Gracie.kimmie" class="header-btn ig-top-badge">
+            <div style="font-weight:700;">IG</div>
         </a>
 
         <h1>🐶 Momo Dog Sitting</h1>
@@ -95,15 +79,12 @@
         <section class="booking-container">
             <form id="bookingForm">
                 <div class="form-group"><label>Your Name</label><input type="text" id="name" required></div>
-                <div class="form-group"><label>Puppy's Name</label><input type="text" id="puppy-name" required></div>
-                <div class="form-group"><label>Check-In Date</label><input type="date" id="check-in" required></div>
-                <div class="form-group"><label>Check-Out Date</label><input type="date" id="check-out" required></div>
                 <button type="submit" class="submit-btn">Email me these booking details ✉️</button>
             </form>
         </section>
     </main>
 
-    <audio id="bgMusic" loop>
+    <audio id="bgMusic" loop preload="auto">
         <source src="https://archive.org/download/Weezer_2021-09-03/14%20Island%20In%20The%20Sun.mp3" type="audio/mpeg">
     </audio>
 
@@ -111,22 +92,26 @@
         const bgMusic = document.getElementById('bgMusic');
         const musicToggle = document.getElementById('musicToggle');
         const musicText = document.getElementById('musicText');
-        let isPlaying = false;
 
-        musicToggle.addEventListener('click', () => {
-            if (isPlaying) {
+        // Global listener: triggers music on first click anywhere on the page
+        function startMusic() {
+            bgMusic.play().then(() => {
+                musicText.innerText = "Pause Music";
+                document.removeEventListener('click', startMusic);
+            }).catch(err => console.log("Waiting for interaction..."));
+        }
+        document.addEventListener('click', startMusic, { once: true });
+
+        // Toggle button logic
+        musicToggle.addEventListener('click', (e) => {
+            e.stopPropagation(); 
+            if (!bgMusic.paused) {
                 bgMusic.pause();
                 musicText.innerText = "Play Music";
             } else {
                 bgMusic.play();
                 musicText.innerText = "Pause Music";
             }
-            isPlaying = !isPlaying;
-        });
-
-        document.getElementById('bookingForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert("Booking request ready for email!");
         });
     </script>
 </body>
