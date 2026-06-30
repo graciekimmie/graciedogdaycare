@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Momo Dog Sitting</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
@@ -169,13 +169,18 @@
             line-height: 1.4;
         }
 
-        .booking-container {
+        /* Standardized Containers for Spacing */
+        .booking-container, .info-container {
             background: #FFFFFF;
             border-radius: 24px;
-            padding: 40px;
+            padding: 40px; 
             max-width: 600px;
-            margin: 0 auto 30px auto;
+            margin: 0 auto 40px auto;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
+        }
+
+        .info-container {
+            text-align: center;
         }
 
         .form-group {
@@ -224,21 +229,10 @@
             cursor: pointer;
             transition: background-color 0.2s, transform 0.1s;
             margin-top: 10px;
-            text-align: center;
         }
 
         .submit-btn:hover {
             background-color: #E8B5C0;
-        }
-
-        .info-container {
-            background: #FFFFFF;
-            border-radius: 24px;
-            padding: 30px;
-            max-width: 600px;
-            margin: 0 auto 60px auto;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
-            text-align: center;
         }
 
         .price-list {
@@ -247,6 +241,8 @@
             color: #555555;
             font-size: 1.05rem;
             line-height: 1.8;
+            text-align: left;
+            display: inline-block;
         }
 
         .price-list strong {
@@ -293,31 +289,9 @@
             letter-spacing: 0.5px;
         }
 
-        /* --- Audio Player Layout Customizations --- */
-        .audio-wrapper {
-            margin-top: 20px;
-            text-align: center;
-            background: #FAFAFA;
-            border: 1px dashed #FFD1DC;
-            padding: 12px;
-            border-radius: 12px;
-        }
-        .audio-wrapper label {
-            font-size: 0.85rem;
-            color: #6B6B6B;
-            font-weight: 600;
-            display: block;
-            margin-bottom: 8px;
-        }
-        audio {
-            width: 100%;
-            max-width: 280px;
-            height: 36px;
-        }
-
         footer {
             text-align: center;
-            padding: 40px 20px;
+            padding: 20px 20px 40px 20px;
             font-size: 0.95rem;
             color: #6B6B6B;
             line-height: 1.6;
@@ -330,23 +304,17 @@
         }
 
         @media (max-width: 600px) {
-            header {
-                padding-top: 120px;
-            }
+            header { padding-top: 120px; }
             .ig-top-badge {
                 top: 20px;
                 right: 50%;
                 transform: translateX(50%);
-            }
-            .ig-top-badge:hover {
-                transform: translateX(50%) translateY(-3px);
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
     <header>
         <a href="instagram://user?username=Gracie.kimmie" id="igBtn" target="_blank" class="ig-top-badge">
             <div class="puppy-head-container">
@@ -362,7 +330,6 @@
     </header>
 
     <main>
-        <!-- VIP Puppies Section -->
         <h2 class="section-title">✨ VIP Puppies ✨</h2>
         <section class="puppy-grid">
             <div class="puppy-card">
@@ -377,7 +344,6 @@
             </div>
         </section>
 
-        <!-- Booking Request Form Section -->
         <h2 class="section-title">📅 Booking Request</h2>
         <section class="booking-container">
             <form id="bookingForm">
@@ -385,33 +351,26 @@
                     <label for="name">Your Name</label>
                     <input type="text" id="name" required>
                 </div>
-
                 <div class="form-group">
                     <label for="puppy-name">Puppy's Name</label>
                     <input type="text" id="puppy-name" required>
                 </div>
-
                 <div class="form-group">
                     <label for="check-in">Check-In Date</label>
                     <input type="date" id="check-in" required>
                 </div>
-
                 <div class="form-group">
                     <label for="check-out">Check-Out Date</label>
                     <input type="date" id="check-out" required>
                 </div>
-
                 <div class="form-group">
                     <label for="notes">Special Notes</label>
                     <textarea id="notes"></textarea>
                 </div>
-
                 <button type="submit" id="submitBtn" class="submit-btn">Email me these booking details ✉️</button>
-                  </a>
+            </form>
         </section>
-        </main>
     
-        <!-- Pricing & Rates Section -->
         <h2 class="section-title">💰 Pricing & Rates</h2>
         <section class="info-container">
             <ul class="price-list">
@@ -419,6 +378,7 @@
                 <li>☀️ <strong>Daily Visit (9am-6pm working day):</strong> $40</li>
             </ul>
              
+            <br>
             <a href="venmo://paycharge?txn=pay&recipients=gracedkim&note=Momo%20Dog%20Sitting%20Booking" id="venmoBtn" class="venmo-link-btn">
                 <div class="pink-dollar-icon">$</div>
                 <div class="venmo-id-text">Pay with Venmo</div>
@@ -434,36 +394,15 @@
 
     <script>
         const form = document.getElementById('bookingForm');
-        const bgMusic = document.getElementById('bgMusic');
-
-        // Cross-platform function to handle secure browser interaction requirements
-        function initiatePlayback() {
-            if (bgMusic.paused) {
-                bgMusic.play()
-                    .then(() => {
-                        console.log("Playback successfully started.");
-                    })
-                    .catch(error => {
-                        console.log("Browser blocked initial automatic playback stream context:", error);
-                    });
-            }
-        }
-
-        // Listens universally for either desktop clicks or mobile taps to break autoplay guardrails safely
-        document.body.addEventListener('click', initiatePlayback, { once: true });
-        document.body.addEventListener('touchstart', initiatePlayback, { once: true });
 
         form.addEventListener('submit', function(event) {
             event.preventDefault();
-
-            // Pull values from form elements
             const clientName = document.getElementById('name').value;
             const puppyName = document.getElementById('puppy-name').value;
             const checkIn = document.getElementById('check-in').value;
             const checkOut = document.getElementById('check-out').value;
             const specialNotes = document.getElementById('notes').value || "None";
 
-            // Format standard text parameters
             const subject = `Momo Dog Sitting Booking Request - ${puppyName}`;
             const body = `Hi Grace,\n\nI'd love to request a booking for my pup! Here are the details:\n\n` +
                          `• Client Name: ${clientName}\n` +
@@ -473,15 +412,13 @@
                          `Special Notes:\n${specialNotes}\n\n` +
                          `Looking forward to hearing from you!`;
 
-            // Uses native mailto to bypass web login checks and route straight into the device's logged-in email client/app
             const mailtoUrl = "mailto:grace.de.kim@gmail.com" +
-                             "?subject=" + encodeURIComponent(subject) +
-                             "&body=" + encodeURIComponent(body);
+                              "?subject=" + encodeURIComponent(subject) +
+                              "&body=" + encodeURIComponent(body);
 
             window.location.href = mailtoUrl;
         });
 
-        // Universal footer fallback
         document.getElementById('footerEmailBtn').addEventListener('click', function(e) {
             e.preventDefault();
             window.location.href = "mailto:grace.de.kim@gmail.com";
@@ -508,6 +445,5 @@
             }, 500);
         });
     </script>
-
 </body>
 </html>
